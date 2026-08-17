@@ -24,6 +24,86 @@
 
   *{box-sizing:border-box;}
 
+  /* ---------- sign-in screen (deliberately generic, not illusionary-themed) ---------- */
+
+  .signin-screen{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:#f1f2f5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: opacity .4s ease;
+  }
+  .signin-screen.hide{
+    opacity:0;
+    pointer-events:none;
+  }
+  .signin-card{
+    width:min(86vw, 320px);
+    background:#ffffff;
+    border:1px solid #d9dadf;
+    border-radius:10px;
+    box-shadow:0 6px 24px rgba(20,20,30,0.08);
+    padding:34px 26px 28px 26px;
+    display:flex;
+    flex-direction:column;
+  }
+  .signin-brand{
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#8a8d98;
+    text-align:center;
+    margin-bottom:4px;
+  }
+  .signin-title{
+    font-size:19px;
+    font-weight:600;
+    color:#1f2024;
+    text-align:center;
+    margin-bottom:22px;
+  }
+  .signin-card label{
+    font-size:12px;
+    color:#5a5c66;
+    margin-bottom:5px;
+  }
+  .signin-card input{
+    border:1px solid #d3d4da;
+    border-radius:6px;
+    padding:10px 11px;
+    font-size:14px;
+    color:#1f2024;
+    margin-bottom:16px;
+    outline:none;
+    font-family:inherit;
+  }
+  .signin-card input:focus{ border-color:#2563eb; }
+  .signin-error{
+    font-size:12px;
+    color:#d1373f;
+    text-align:center;
+    min-height:1.4em;
+    margin-bottom:6px;
+  }
+  .signin-card button{
+    background:#2563eb;
+    border:none;
+    border-radius:6px;
+    color:#ffffff;
+    font-size:14px;
+    font-weight:600;
+    font-family:inherit;
+    padding:11px 0;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .signin-card button:active{ background:#1d4fc4; }
+
+
   html,body{
     height:100%;
     margin:0;
@@ -852,6 +932,19 @@
 </head>
 <body>
 
+  <div class="signin-screen" id="signInScreen">
+    <div class="signin-card">
+      <div class="signin-brand">photon os</div>
+      <div class="signin-title">sign in</div>
+      <label for="siUsername">username</label>
+      <input type="text" id="siUsername" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <label for="siPassword">password</label>
+      <input type="password" id="siPassword" autocomplete="off">
+      <div class="signin-error" id="siError">&nbsp;</div>
+      <button id="siSubmit">sign in</button>
+    </div>
+  </div>
+
   <div class="bg-layer" id="dotLayer"></div>
 
   <svg id="circuitSvg" class="bg-layer" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice">
@@ -1179,6 +1272,30 @@
 
 
 <script>
+  // ---------- sign in ----------
+  const SIGNIN_USER = 'illusionary';
+  const SIGNIN_PASS = 'camerashy';
+  const signInScreen = document.getElementById('signInScreen');
+  const siUsername = document.getElementById('siUsername');
+  const siPassword = document.getElementById('siPassword');
+  const siError = document.getElementById('siError');
+
+  function attemptSignIn(){
+    if(siUsername.value === SIGNIN_USER && siPassword.value === SIGNIN_PASS){
+      siError.innerHTML = '&nbsp;';
+      signInScreen.classList.add('hide');
+      setTimeout(()=>{ signInScreen.remove(); }, 450);
+    }else{
+      siError.textContent = 'incorrect username or password';
+      siPassword.value = '';
+      siPassword.focus();
+    }
+  }
+  document.getElementById('siSubmit').addEventListener('click', attemptSignIn);
+  siUsername.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') siPassword.focus(); });
+  siPassword.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') attemptSignIn(); });
+  siUsername.focus();
+
   // (background dot grid is handled via CSS on #dotLayer)
 
   // ---------- background wash blocks ----------
