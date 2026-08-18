@@ -189,8 +189,13 @@
     max-width:520px;
   }
   header h1{
+    display:inline-block;
     margin:0 0 10px 0;
-    font-size:clamp(18px, 4vw, 26px);
+    background:var(--peri-200);
+    border:3px solid var(--pure-blue);
+    border-radius:10px;
+    padding:8px 16px;
+    font-size:clamp(16px, 3.6vw, 22px);
     font-weight:700;
     letter-spacing:0.5px;
   }
@@ -289,6 +294,7 @@
     z-index:5;
     background: hsl(240, 65%, 88%);
     border-top:4px solid var(--blue-600);
+    transform: translateY(100%);
     transition: transform .35s ease;
     max-height:70vh;
     display:flex;
@@ -313,10 +319,15 @@
     background:none;
     border:none;
     color:var(--blue-600);
-    font-size:20px;
+    font-size:22px;
     font-weight:800;
     cursor:pointer;
-    padding:4px 10px;
+    padding:4px 8px;
+    min-width:25px;
+    min-height:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
   .app-grid{
@@ -347,7 +358,23 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
   }
+  .app-tile:hover .icon{
+    background:var(--blue-600);
+    transform:translateY(-4px);
+    box-shadow:0 6px 14px rgba(20,20,180,0.25);
+  }
+  .app-tile:hover .icon svg{ stroke:var(--white); }
+  .app-tile:active .icon{
+    transform:translateY(-1px) scale(0.94);
+  }
+  .app-tile.soon:hover .icon{
+    background:var(--peri-200);
+    transform:none;
+    box-shadow:none;
+  }
+  .app-tile.soon:hover .icon svg{ stroke:var(--blue-600); }
   .app-tile.soon .icon{
     opacity:0.5;
     border-style:dashed;
@@ -520,6 +547,8 @@
   }
 
   .calc-display{
+    width:100%;
+    max-width:420px;
     padding: 26px 24px 14px 24px;
     text-align:right;
   }
@@ -536,6 +565,8 @@
     word-break:break-all;
   }
   .calc-grid{
+    width:100%;
+    max-width:420px;
     flex:1;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
@@ -564,6 +595,8 @@
   .calc-btn.wide{ grid-column: span 2; }
 
   .tw-tabs{
+    width:100%;
+    max-width:420px;
     display:flex;
     gap:8px;
     padding:16px 20px 0 20px;
@@ -585,6 +618,8 @@
 
   .tw-pane[hidden]{ display:none; }
   .tw-pane{
+    width:100%;
+    max-width:420px;
     flex:1;
     display:flex;
     flex-direction:column;
@@ -906,6 +941,74 @@
   .mine-cell.flagged{ background:var(--peri-400); }
   .mine-cell.mine{ background:var(--blue-600); color:var(--white); }
 
+  /* ---------- settings ---------- */
+
+  .settings-body{
+    flex:1;
+    overflow-y:auto;
+    padding: 20px 24px 30px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:26px;
+  }
+  .settings-section-title{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    color:var(--blue-700);
+    text-transform:lowercase;
+    opacity:0.7;
+    margin-bottom:10px;
+  }
+  .settings-signout{
+    width:100%;
+    background:var(--blue-600);
+    border:none;
+    border-radius:12px;
+    color:var(--white);
+    font-family:inherit;
+    font-weight:700;
+    font-size:14px;
+    padding:14px 0;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
+  .settings-signout:active{ background:var(--blue-700); }
+  .settings-hint{
+    font-size:10px;
+    color:var(--blue-700);
+    opacity:0.6;
+    margin-top:8px;
+    text-transform:lowercase;
+  }
+  .specs-list{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    border:2px solid var(--peri-300);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .specs-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 14px;
+    background:var(--peri-100);
+    font-size:12px;
+  }
+  .specs-row:nth-child(even){ background:var(--white); }
+  .specs-row span:first-child{
+    color:var(--blue-700);
+    opacity:0.7;
+    text-transform:lowercase;
+  }
+  .specs-row span:last-child{
+    color:var(--blue-900);
+    font-weight:700;
+    text-align:right;
+  }
+
   .toast{
     position:fixed;
     bottom:90px;
@@ -928,6 +1031,55 @@
     opacity:1;
     transform:translateX(-50%) translateY(0);
   }
+
+  .notif-overlay{
+    position:fixed;
+    inset:0;
+    z-index:50;
+    background:rgba(10,10,60,0.28);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .notif-overlay[hidden]{ display:none; }
+  .notif-card{
+    width:min(84vw, 300px);
+    background:var(--white);
+    border:3px solid var(--pure-blue);
+    border-radius:16px;
+    padding:26px 22px 22px 22px;
+    text-align:center;
+    box-shadow:0 12px 32px rgba(10,10,60,0.25);
+  }
+  .notif-title{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    color:var(--blue-700);
+    opacity:0.7;
+    text-transform:lowercase;
+    margin-bottom:8px;
+  }
+  .notif-msg{
+    font-size:16px;
+    font-weight:700;
+    color:var(--blue-600);
+    margin-bottom:20px;
+    text-transform:lowercase;
+  }
+  .notif-card button{
+    background:var(--blue-600);
+    border:none;
+    border-radius:10px;
+    color:var(--white);
+    font-family:inherit;
+    font-weight:700;
+    font-size:13px;
+    padding:11px 30px;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
 </style>
 </head>
 <body>
@@ -946,6 +1098,18 @@
   </div>
 
   <div class="bg-layer" id="dotLayer"></div>
+
+  <svg id="glitchSvg" class="bg-layer" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice">
+    <rect x="10" y="60" width="150" height="150" fill="var(--pure-blue)" opacity="0.14" transform="rotate(-8 85 135)" />
+    <rect x="190" y="10" width="120" height="220" fill="var(--pure-blue)" opacity="0.12" transform="rotate(6 250 120)" />
+    <rect x="60" y="240" width="200" height="130" fill="var(--pure-blue)" opacity="0.16" transform="rotate(4 160 305)" />
+    <rect x="270" y="260" width="140" height="180" fill="var(--pure-blue)" opacity="0.13" transform="rotate(-10 340 350)" />
+    <rect x="-30" y="420" width="170" height="170" fill="var(--pure-blue)" opacity="0.15" transform="rotate(9 55 505)" />
+    <rect x="150" y="470" width="190" height="150" fill="var(--pure-blue)" opacity="0.12" transform="rotate(-5 245 545)" />
+    <rect x="20" y="640" width="160" height="200" fill="var(--pure-blue)" opacity="0.14" transform="rotate(7 100 740)" />
+    <rect x="230" y="660" width="180" height="160" fill="var(--pure-blue)" opacity="0.13" transform="rotate(-6 320 740)" />
+    <rect x="90" y="800" width="220" height="140" fill="var(--pure-blue)" opacity="0.15" transform="rotate(3 200 870)" />
+  </svg>
 
   <svg id="circuitSvg" class="bg-layer" viewBox="0 0 400 900" preserveAspectRatio="xMidYMid slice">
     <g class="pipe-outline">
@@ -1034,23 +1198,11 @@
         </span>
         <span class="label">storage</span>
       </button>
-      <button class="app-tile" data-app="calculator">
+      <button class="app-tile" data-app="tools">
         <span class="icon">
-          <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h1M12 11h1M16 11h1M8 14h1M12 14h1M16 14h1M8 17h1M12 17h1M16 17h1"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4l-2.6 2.6-1.7-1.7z"/></svg>
         </span>
-        <span class="label">calculator</span>
-      </button>
-      <button class="app-tile" data-app="timer">
-        <span class="icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 13V9M9 3h6M12 13l3-2"/></svg>
-        </span>
-        <span class="label">timer</span>
-      </button>
-      <button class="app-tile" data-app="rng">
-        <span class="icon">
-          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="8.5" cy="15.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/><circle cx="12" cy="12" r="1"/></svg>
-        </span>
-        <span class="label">random</span>
+        <span class="label">tools</span>
       </button>
       <button class="app-tile" data-app="games">
         <span class="icon">
@@ -1058,7 +1210,7 @@
         </span>
         <span class="label">games</span>
       </button>
-      <button class="app-tile soon" data-app="settings">
+      <button class="app-tile" data-app="settings">
         <span class="icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
         </span>
@@ -1093,93 +1245,89 @@
     <div class="save-status" id="notesStatus">unsaved</div>
   </div>
 
-  <div class="app-window" id="calcWindow">
+  <div class="app-window" id="toolsWindow">
     <div class="app-window-head">
-      <h2>calculator</h2>
+      <h2 id="toolsTitle">tools</h2>
       <div class="btns">
-        <button id="calcClose">close</button>
+        <button id="toolsBack" hidden>menu</button>
+        <button id="toolsClose">close</button>
       </div>
     </div>
-    <div class="calc-display">
-      <div class="calc-prev" id="calcPrev">&nbsp;</div>
-      <div class="calc-current" id="calcCurrent">0</div>
+
+    <div class="games-menu" id="toolsMenu">
+      <button class="game-tile" data-tool="calculator">calculator <span class="arrow">›</span></button>
+      <button class="game-tile" data-tool="timer">timer <span class="arrow">›</span></button>
+      <button class="game-tile" data-tool="rng">random <span class="arrow">›</span></button>
     </div>
-    <div class="calc-grid calc-grid-5">
-      <button class="calc-btn op" data-key="clear">c</button>
-      <button class="calc-btn op" data-key="backspace">⌫</button>
-      <button class="calc-btn op" data-key="percent">%</button>
-      <button class="calc-btn op" data-key="sqrt">√</button>
-      <button class="calc-btn op" data-key="divide">÷</button>
 
-      <button class="calc-btn" data-key="7">7</button>
-      <button class="calc-btn" data-key="8">8</button>
-      <button class="calc-btn" data-key="9">9</button>
-      <button class="calc-btn op" data-key="square">x²</button>
-      <button class="calc-btn op" data-key="multiply">×</button>
+    <div class="game-stage" id="stageCalculator" hidden>
+      <div class="calc-display">
+        <div class="calc-prev" id="calcPrev">&nbsp;</div>
+        <div class="calc-current" id="calcCurrent">0</div>
+      </div>
+      <div class="calc-grid calc-grid-5">
+        <button class="calc-btn op" data-key="clear">c</button>
+        <button class="calc-btn op" data-key="backspace">⌫</button>
+        <button class="calc-btn op" data-key="percent">%</button>
+        <button class="calc-btn op" data-key="sqrt">√</button>
+        <button class="calc-btn op" data-key="divide">÷</button>
 
-      <button class="calc-btn" data-key="4">4</button>
-      <button class="calc-btn" data-key="5">5</button>
-      <button class="calc-btn" data-key="6">6</button>
-      <button class="calc-btn op" data-key="reciprocal">1/x</button>
-      <button class="calc-btn op" data-key="subtract">−</button>
+        <button class="calc-btn" data-key="7">7</button>
+        <button class="calc-btn" data-key="8">8</button>
+        <button class="calc-btn" data-key="9">9</button>
+        <button class="calc-btn op" data-key="square">x²</button>
+        <button class="calc-btn op" data-key="multiply">×</button>
 
-      <button class="calc-btn" data-key="1">1</button>
-      <button class="calc-btn" data-key="2">2</button>
-      <button class="calc-btn" data-key="3">3</button>
-      <button class="calc-btn op" data-key="sign">±</button>
-      <button class="calc-btn op" data-key="add">+</button>
+        <button class="calc-btn" data-key="4">4</button>
+        <button class="calc-btn" data-key="5">5</button>
+        <button class="calc-btn" data-key="6">6</button>
+        <button class="calc-btn op" data-key="reciprocal">1/x</button>
+        <button class="calc-btn op" data-key="subtract">−</button>
 
-      <button class="calc-btn wide" data-key="0">0</button>
-      <button class="calc-btn" data-key="decimal">.</button>
-      <button class="calc-btn op" data-key="equals">=</button>
-    </div>
-  </div>
+        <button class="calc-btn" data-key="1">1</button>
+        <button class="calc-btn" data-key="2">2</button>
+        <button class="calc-btn" data-key="3">3</button>
+        <button class="calc-btn op" data-key="sign">±</button>
+        <button class="calc-btn op" data-key="add">+</button>
 
-  <div class="app-window" id="timerWindow">
-    <div class="app-window-head">
-      <h2>timer</h2>
-      <div class="btns">
-        <button id="timerClose">close</button>
+        <button class="calc-btn wide" data-key="0">0</button>
+        <button class="calc-btn" data-key="decimal">.</button>
+        <button class="calc-btn op" data-key="equals">=</button>
       </div>
     </div>
-    <div class="tw-tabs">
-      <button class="tw-tab active" id="tabStopwatch">stopwatch</button>
-      <button class="tw-tab" id="tabCountdown">timer</button>
+
+    <div class="game-stage" id="stageTimer" hidden>
+      <div class="tw-tabs">
+        <button class="tw-tab active" id="tabStopwatch">stopwatch</button>
+        <button class="tw-tab" id="tabCountdown">timer</button>
+      </div>
+
+      <div class="tw-pane" id="paneStopwatch">
+        <div class="tw-display" id="swDisplay">00:00.0</div>
+        <div class="tw-controls">
+          <button class="primary" id="swStartStop">start</button>
+          <button id="swLap">lap</button>
+          <button id="swReset">reset</button>
+        </div>
+        <div class="tw-laps" id="swLaps"></div>
+      </div>
+
+      <div class="tw-pane" id="paneCountdown" hidden>
+        <div class="tw-set" id="ctSetRow">
+          <input type="number" id="ctMin" min="0" value="5">
+          <span>:</span>
+          <input type="number" id="ctSec" min="0" max="59" value="0">
+        </div>
+        <div class="tw-display" id="ctDisplay" hidden>05:00</div>
+        <div class="tw-sub" id="ctSub">&nbsp;</div>
+        <div class="tw-controls">
+          <button class="primary" id="ctStartStop">start</button>
+          <button id="ctReset">reset</button>
+        </div>
+      </div>
     </div>
 
-    <div class="tw-pane" id="paneStopwatch">
-      <div class="tw-display" id="swDisplay">00:00.0</div>
-      <div class="tw-controls">
-        <button class="primary" id="swStartStop">start</button>
-        <button id="swLap">lap</button>
-        <button id="swReset">reset</button>
-      </div>
-      <div class="tw-laps" id="swLaps"></div>
-    </div>
-
-    <div class="tw-pane" id="paneCountdown" hidden>
-      <div class="tw-set" id="ctSetRow">
-        <input type="number" id="ctMin" min="0" value="5">
-        <span>:</span>
-        <input type="number" id="ctSec" min="0" max="59" value="0">
-      </div>
-      <div class="tw-display" id="ctDisplay" hidden>05:00</div>
-      <div class="tw-sub" id="ctSub">&nbsp;</div>
-      <div class="tw-controls">
-        <button class="primary" id="ctStartStop">start</button>
-        <button id="ctReset">reset</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="app-window" id="rngWindow">
-    <div class="app-window-head">
-      <h2>random</h2>
-      <div class="btns">
-        <button id="rngClose">close</button>
-      </div>
-    </div>
-    <div class="tw-pane">
+    <div class="game-stage" id="stageRng" hidden>
       <div class="rng-display" id="rngResult">--</div>
       <div class="rng-inputs">
         <input type="number" id="rngMin" value="1">
@@ -1192,6 +1340,34 @@
         <button data-min="1" data-max="20">d20</button>
         <button data-min="1" data-max="100">1–100</button>
         <button data-min="0" data-max="1">coin flip</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-window" id="settingsWindow">
+    <div class="app-window-head">
+      <h2>settings</h2>
+      <div class="btns">
+        <button id="settingsClose">close</button>
+      </div>
+    </div>
+    <div class="settings-body">
+      <div>
+        <div class="settings-section-title">account</div>
+        <button class="settings-signout" id="signOutBtn">sign out</button>
+        <div class="settings-hint">or press ctrl + shift + x anytime</div>
+      </div>
+      <div>
+        <div class="settings-section-title">about this pc</div>
+        <div class="specs-list">
+          <div class="specs-row"><span>os</span><span>photon os v1.2</span></div>
+          <div class="specs-row"><span>signed in as</span><span>illusionary</span></div>
+          <div class="specs-row"><span>chipset</span><span>lumineX core x1</span></div>
+          <div class="specs-row"><span>memory</span><span>16 gb (hue-240)</span></div>
+          <div class="specs-row"><span>storage</span><span>illusionary-os file system</span></div>
+          <div class="specs-row"><span>display</span><span>circuit-blue render engine</span></div>
+          <div class="specs-row"><span>uptime</span><span id="specsUptime">0:00</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1270,6 +1446,14 @@
 
   <div class="toast" id="toast"></div>
 
+  <div class="notif-overlay" id="notifOverlay" hidden>
+    <div class="notif-card">
+      <div class="notif-title" id="notifTitle">photon os</div>
+      <div class="notif-msg" id="notifMsg">&nbsp;</div>
+      <button id="notifOk">ok</button>
+    </div>
+  </div>
+
 
 <script>
   // ---------- sign in ----------
@@ -1284,17 +1468,30 @@
     if(siUsername.value === SIGNIN_USER && siPassword.value === SIGNIN_PASS){
       siError.innerHTML = '&nbsp;';
       signInScreen.classList.add('hide');
-      setTimeout(()=>{ signInScreen.remove(); }, 450);
     }else{
       siError.textContent = 'incorrect username or password';
       siPassword.value = '';
       siPassword.focus();
     }
   }
+  function signOut(){
+    siUsername.value = '';
+    siPassword.value = '';
+    siError.innerHTML = '&nbsp;';
+    signInScreen.classList.remove('hide');
+    siUsername.focus();
+  }
   document.getElementById('siSubmit').addEventListener('click', attemptSignIn);
   siUsername.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') siPassword.focus(); });
   siPassword.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') attemptSignIn(); });
   siUsername.focus();
+
+  window.addEventListener('keydown', (e)=>{
+    if(e.ctrlKey && e.shiftKey && (e.key === 'X' || e.key === 'x')){
+      e.preventDefault();
+      signOut();
+    }
+  });
 
   // (background dot grid is handled via CSS on #dotLayer)
 
@@ -1395,17 +1592,14 @@
       if(app === 'storage'){
         openStorage();
       }
-      if(app === 'calculator'){
-        openCalculator();
-      }
-      if(app === 'timer'){
-        openTimer();
-      }
-      if(app === 'rng'){
-        openRng();
+      if(app === 'tools'){
+        openTools();
       }
       if(app === 'games'){
         openGames();
+      }
+      if(app === 'settings'){
+        openSettings();
       }
     });
   });
@@ -1573,7 +1767,6 @@
   });
 
   // ---------- calculator ----------
-  const calcWindow = document.getElementById('calcWindow');
   const calcPrev = document.getElementById('calcPrev');
   const calcCurrent = document.getElementById('calcCurrent');
 
@@ -1581,15 +1774,6 @@
   let calcOp = null;       // pending operator
   let calcEntry = '0';     // current on-screen entry
   let calcFresh = true;    // next digit press starts a new entry
-
-  function openCalculator(){
-    closeDrawer();
-    calcWindow.classList.add('open');
-    calcReset();
-  }
-  document.getElementById('calcClose').addEventListener('click', ()=>{
-    calcWindow.classList.remove('open');
-  });
 
   function calcReset(){
     calcAcc = null;
@@ -1700,19 +1884,10 @@
   });
 
   // ---------- timer / stopwatch ----------
-  const timerWindow = document.getElementById('timerWindow');
   const tabStopwatch = document.getElementById('tabStopwatch');
   const tabCountdown = document.getElementById('tabCountdown');
   const paneStopwatch = document.getElementById('paneStopwatch');
   const paneCountdown = document.getElementById('paneCountdown');
-
-  function openTimer(){
-    closeDrawer();
-    timerWindow.classList.add('open');
-  }
-  document.getElementById('timerClose').addEventListener('click', ()=>{
-    timerWindow.classList.remove('open');
-  });
 
   tabStopwatch.addEventListener('click', ()=>{
     tabStopwatch.classList.add('active');
@@ -1820,7 +1995,7 @@
           ctRunning = false;
           ctSub.textContent = "time's up!";
           ctStartStop.textContent = 'start';
-          showToast("time's up!");
+          showNotification('photon os', "time's up!");
         }
       }, 1000);
     }else{
@@ -1842,18 +2017,9 @@
   });
 
   // ---------- rng ----------
-  const rngWindow = document.getElementById('rngWindow');
   const rngResult = document.getElementById('rngResult');
   const rngMin = document.getElementById('rngMin');
   const rngMax = document.getElementById('rngMax');
-
-  function openRng(){
-    closeDrawer();
-    rngWindow.classList.add('open');
-  }
-  document.getElementById('rngClose').addEventListener('click', ()=>{
-    rngWindow.classList.remove('open');
-  });
 
   function rollBetween(min, max){
     const lo = Math.min(min, max);
@@ -1919,7 +2085,7 @@
   }
   gamesBack.addEventListener('click', showGamesMenu);
 
-  document.querySelectorAll('.game-tile').forEach(tile=>{
+  document.querySelectorAll('#gamesMenu .game-tile').forEach(tile=>{
     tile.addEventListener('click', ()=>{
       const game = tile.dataset.game;
       activeGame = game;
@@ -1931,6 +2097,57 @@
       if(game === 'g2048') g2048Start();
       if(game === 'mines') minesStart();
     });
+  });
+
+  // ---------- tools shell ----------
+  const toolsWindow = document.getElementById('toolsWindow');
+  const toolsMenu = document.getElementById('toolsMenu');
+  const toolsBack = document.getElementById('toolsBack');
+  const toolsTitle = document.getElementById('toolsTitle');
+  const toolStages = {
+    calculator: document.getElementById('stageCalculator'),
+    timer: document.getElementById('stageTimer'),
+    rng: document.getElementById('stageRng'),
+  };
+
+  function openTools(){
+    closeDrawer();
+    toolsWindow.classList.add('open');
+    showToolsMenu();
+  }
+  document.getElementById('toolsClose').addEventListener('click', ()=>{
+    toolsWindow.classList.remove('open');
+  });
+
+  function showToolsMenu(){
+    toolsTitle.textContent = 'tools';
+    toolsBack.hidden = true;
+    toolsMenu.hidden = false;
+    Object.values(toolStages).forEach(s => s.hidden = true);
+  }
+  toolsBack.addEventListener('click', showToolsMenu);
+
+  document.querySelectorAll('#toolsMenu .game-tile').forEach(tile=>{
+    tile.addEventListener('click', ()=>{
+      const tool = tile.dataset.tool;
+      toolsTitle.textContent = tile.textContent.replace('›','').trim();
+      toolsBack.hidden = false;
+      toolsMenu.hidden = true;
+      toolStages[tool].hidden = false;
+    });
+  });
+
+  // ---------- notifications ----------
+  const notifOverlay = document.getElementById('notifOverlay');
+  const notifTitle = document.getElementById('notifTitle');
+  const notifMsg = document.getElementById('notifMsg');
+  function showNotification(title, msg){
+    notifTitle.textContent = title;
+    notifMsg.textContent = msg;
+    notifOverlay.hidden = false;
+  }
+  document.getElementById('notifOk').addEventListener('click', ()=>{
+    notifOverlay.hidden = true;
   });
 
   // ================= SNAKE =================
@@ -2024,10 +2241,11 @@
   });
   window.addEventListener('keydown', (e)=>{
     if(activeGame !== 'snake') return;
-    if(e.key === 'ArrowUp') snakeSetDir('up');
-    if(e.key === 'ArrowDown') snakeSetDir('down');
-    if(e.key === 'ArrowLeft') snakeSetDir('left');
-    if(e.key === 'ArrowRight') snakeSetDir('right');
+    const k = e.key.toLowerCase();
+    if(k === 'arrowup' || k === 'w') snakeSetDir('up');
+    if(k === 'arrowdown' || k === 's') snakeSetDir('down');
+    if(k === 'arrowleft' || k === 'a') snakeSetDir('left');
+    if(k === 'arrowright' || k === 'd') snakeSetDir('right');
   });
 
   // ================= 2048 =================
@@ -2221,10 +2439,11 @@
 
   window.addEventListener('keydown', (e)=>{
     if(activeGame !== 'g2048') return;
-    if(e.key === 'ArrowLeft'){ e.preventDefault(); g2048Move('left'); }
-    if(e.key === 'ArrowRight'){ e.preventDefault(); g2048Move('right'); }
-    if(e.key === 'ArrowUp'){ e.preventDefault(); g2048Move('up'); }
-    if(e.key === 'ArrowDown'){ e.preventDefault(); g2048Move('down'); }
+    const k = e.key.toLowerCase();
+    if(k === 'arrowleft' || k === 'a'){ e.preventDefault(); g2048Move('left'); }
+    if(k === 'arrowright' || k === 'd'){ e.preventDefault(); g2048Move('right'); }
+    if(k === 'arrowup' || k === 'w'){ e.preventDefault(); g2048Move('up'); }
+    if(k === 'arrowdown' || k === 's'){ e.preventDefault(); g2048Move('down'); }
   });
 
   let g2048TouchStart = null;
@@ -2336,8 +2555,12 @@
       if(cell.revealed && cell.mine) div.textContent = '*';
       else if(cell.revealed && cell.count > 0) div.textContent = cell.count;
       else if(cell.flagged) div.textContent = '⚑';
-      div.addEventListener('click', ()=>{
+      div.addEventListener('click', (e)=>{
         if(minesOver) return;
+        if(e.shiftKey){
+          if(!cell.revealed){ cell.flagged = !cell.flagged; minesRender(); }
+          return;
+        }
         if(minesFlagMode){
           if(!cell.revealed){ cell.flagged = !cell.flagged; minesRender(); }
         }else{
@@ -2354,6 +2577,29 @@
       minesBoardEl.appendChild(div);
     }
   }
+
+  // ---------- settings ----------
+  const settingsWindow = document.getElementById('settingsWindow');
+  function openSettings(){
+    closeDrawer();
+    settingsWindow.classList.add('open');
+  }
+  document.getElementById('settingsClose').addEventListener('click', ()=>{
+    settingsWindow.classList.remove('open');
+  });
+  document.getElementById('signOutBtn').addEventListener('click', ()=>{
+    settingsWindow.classList.remove('open');
+    signOut();
+  });
+
+  const bootTime = Date.now();
+  const specsUptime = document.getElementById('specsUptime');
+  setInterval(()=>{
+    const secs = Math.floor((Date.now() - bootTime) / 1000);
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    specsUptime.textContent = m + ':' + pad(s);
+  }, 1000);
 </script>
 
 </body>
