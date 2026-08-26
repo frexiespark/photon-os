@@ -981,6 +981,84 @@
   .mine-cell.flagged{ background:var(--peri-400); }
   .mine-cell.mine{ background:var(--blue-600); color:var(--white); }
 
+  /* reflex */
+  .reflex-board{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:12px;
+    width:min(80vw, 300px);
+    aspect-ratio:1;
+  }
+  .reflex-cell{
+    border-radius:14px;
+    border:3px solid var(--blue-600);
+    background:var(--peri-100);
+    transition: background .08s ease, transform .08s ease;
+  }
+  .reflex-cell.active{
+    background:var(--blue-600);
+    transform:scale(0.94);
+    box-shadow:0 0 18px 2px rgba(20,20,224,0.5);
+  }
+
+  /* wordle */
+  .wordle-board{
+    display:grid;
+    grid-template-rows:repeat(6, 1fr);
+    gap:6px;
+    width:min(72vw, 240px);
+    aspect-ratio: 5/6;
+  }
+  .wordle-row{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:6px;
+  }
+  .wordle-tile{
+    border:2.5px solid var(--peri-300);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:18px;
+    text-transform:uppercase;
+    color:var(--blue-900);
+    background:var(--peri-100);
+  }
+  .wordle-tile.filled{ border-color:var(--blue-600); }
+  .wordle-tile.correct{ background:var(--blue-600); border-color:var(--blue-600); color:var(--white); }
+  .wordle-tile.present{ background:var(--peri-400); border-color:var(--peri-400); color:var(--blue-900); }
+  .wordle-tile.absent{ background:var(--peri-200); border-color:var(--peri-200); color:var(--blue-700); opacity:0.55; }
+
+  .wordle-keyboard{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    width:min(92vw, 340px);
+    margin-top:16px;
+  }
+  .wordle-krow{ display:flex; gap:4px; justify-content:center; }
+  .wordle-key{
+    flex:1;
+    max-width:30px;
+    padding:11px 0;
+    border:2px solid var(--blue-600);
+    border-radius:6px;
+    background:var(--peri-100);
+    color:var(--blue-700);
+    font-family:inherit;
+    font-weight:700;
+    font-size:11px;
+    text-align:center;
+    cursor:pointer;
+    text-transform:uppercase;
+  }
+  .wordle-key.wide{ max-width:48px; font-size:9px; }
+  .wordle-key.correct{ background:var(--blue-600); color:var(--white); }
+  .wordle-key.present{ background:var(--peri-400); }
+  .wordle-key.absent{ background:var(--peri-300); opacity:0.5; }
+
   /* ---------- settings ---------- */
 
   .settings-body{
@@ -1014,6 +1092,39 @@
     text-transform:lowercase;
   }
   .settings-signout:active{ background:var(--blue-700); }
+  .settings-toggle-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:2px solid var(--peri-300);
+    border-radius:12px;
+    padding:12px 16px;
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue-700);
+    text-transform:lowercase;
+    cursor:pointer;
+  }
+  .settings-toggle-row input{ accent-color:var(--blue-600); width:18px; height:18px; }
+  .settings-links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .settings-link-btn{
+    background:var(--peri-100);
+    border:2px solid var(--blue-600);
+    color:var(--blue-700);
+    font-family:inherit;
+    font-weight:700;
+    font-size:13px;
+    padding:12px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    text-align:left;
+    text-transform:lowercase;
+  }
+  .settings-link-btn:active{ background:var(--peri-300); }
   .settings-hint{
     font-size:10px;
     color:var(--blue-700);
@@ -1352,10 +1463,111 @@
     cursor:pointer;
     text-transform:lowercase;
   }
+
+  /* ---------- todo ---------- */
+
+  .todo-input-row{
+    display:flex;
+    gap:8px;
+    width:100%;
+    max-width:420px;
+    padding: 0 4px 14px 4px;
+  }
+  .todo-input-row input{
+    flex:1;
+    border:2px solid var(--peri-300);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    color:var(--blue-900);
+    outline:none;
+  }
+  .todo-input-row input:focus{ border-color:var(--blue-600); }
+  .todo-input-row button{
+    flex:none;
+    background:var(--blue-600);
+    border:2px solid var(--blue-600);
+    color:var(--white);
+    font-family:inherit;
+    font-weight:700;
+    font-size:13px;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
+  .todo-head-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    max-width:420px;
+    padding:0 4px 6px 4px;
+  }
+  .todo-head-row span{
+    font-size:11px;
+    font-weight:700;
+    color:var(--blue-700);
+    opacity:0.7;
+    text-transform:lowercase;
+  }
+  .todo-head-row button{
+    background:none;
+    border:none;
+    color:var(--blue-700);
+    opacity:0.6;
+    font-family:inherit;
+    font-size:11px;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
+  .todo-list{
+    width:100%;
+    max-width:420px;
+    overflow-y:auto;
+  }
+  .todo-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    border-bottom:2px solid var(--peri-200);
+  }
+  .todo-row input[type=checkbox]{
+    width:20px;
+    height:20px;
+    flex:none;
+    accent-color:var(--blue-600);
+    cursor:pointer;
+  }
+  .todo-row .todo-text{
+    flex:1;
+    font-size:14px;
+    color:var(--blue-900);
+    word-break:break-word;
+  }
+  .todo-row.done .todo-text{
+    text-decoration:line-through;
+    opacity:0.45;
+  }
+  .todo-row .todo-delete{
+    flex:none;
+    background:none;
+    border:none;
+    color:var(--blue-700);
+    opacity:0.5;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    padding:4px 8px;
+  }
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="words.js"></script>
+<script src="quotes.js"></script>
 </head>
 <body>
 
@@ -1485,6 +1697,12 @@
         </span>
         <span class="label">tools</span>
       </button>
+      <button class="app-tile" data-app="todo">
+        <span class="icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+        </span>
+        <span class="label">to-do</span>
+      </button>
       <button class="app-tile" data-app="search">
         <span class="icon">
           <svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>
@@ -1603,6 +1821,7 @@
       <div class="tw-tabs">
         <button class="tw-tab active" id="tabStopwatch">stopwatch</button>
         <button class="tw-tab" id="tabCountdown">timer</button>
+        <button class="tw-tab" id="tabPomodoro">pomodoro</button>
       </div>
 
       <div class="tw-pane" id="paneStopwatch">
@@ -1628,6 +1847,28 @@
           <button id="ctReset">reset</button>
         </div>
       </div>
+
+      <div class="tw-pane" id="panePomodoro" hidden>
+        <div class="game-settings">
+          <select id="pomoWorkSelect">
+            <option value="15">focus: 15m</option>
+            <option value="25" selected>focus: 25m</option>
+            <option value="45">focus: 45m</option>
+          </select>
+          <select id="pomoBreakSelect">
+            <option value="5" selected>break: 5m</option>
+            <option value="10">break: 10m</option>
+            <option value="15">break: 15m</option>
+          </select>
+        </div>
+        <div class="tw-sub" id="pomoPhaseLabel">focus session</div>
+        <div class="tw-display" id="pomoDisplay">25:00</div>
+        <div class="tw-sub" id="pomoCycleLabel">session 1 of 4</div>
+        <div class="tw-controls">
+          <button class="primary" id="pomoStartStop">start</button>
+          <button id="pomoReset">reset</button>
+        </div>
+      </div>
     </div>
 
     <div class="game-stage" id="stageRng" hidden>
@@ -1644,6 +1885,26 @@
         <button data-min="1" data-max="100">1–100</button>
         <button data-min="0" data-max="1">coin flip</button>
       </div>
+    </div>
+  </div>
+
+  <div class="app-window" id="todoWindow">
+    <div class="app-window-head">
+      <h2>to-do</h2>
+      <div class="btns">
+        <button id="todoClose">close</button>
+      </div>
+    </div>
+    <div class="game-stage" style="justify-content:flex-start; padding-top:20px;">
+      <div class="todo-input-row">
+        <input type="text" id="todoInput" placeholder="add a task...">
+        <button id="todoAddBtn">add</button>
+      </div>
+      <div class="todo-head-row">
+        <span id="todoCount">0 tasks</span>
+        <button id="todoClearDone">clear completed</button>
+      </div>
+      <div class="todo-list" id="todoList"></div>
     </div>
   </div>
 
@@ -1763,14 +2024,22 @@
         <div class="settings-hint">or press ctrl + shift + x anytime</div>
       </div>
       <div>
+        <div class="settings-section-title">my sites</div>
+        <div class="settings-links">
+          <button class="settings-link-btn" data-url="https://frexiespark.github.io/skpws-0.6.1">sketchpaws</button>
+          <button class="settings-link-btn" data-url="https://frexiespark.github.io/silly">spec labs</button>
+          <button class="settings-link-btn" data-url="https://sites.google.com/spacifyhub">spacify hub</button>
+        </div>
+      </div>
+      <div>
         <div class="settings-section-title">about this pc</div>
         <div class="specs-list">
-          <div class="specs-row"><span>os</span><span>photon os 1.4</span></div>
+          <div class="specs-row"><span>os</span><span>photon os v1.5</span></div>
           <div class="specs-row"><span>signed in as</span><span>illusionary</span></div>
-          <div class="specs-row"><span>chipset</span><span>lumineX core x1</span></div>
+          <div class="specs-row"><span>chipset</span><span>lumineX core x3</span></div>
           <div class="specs-row"><span>memory</span><span>16 gb</span></div>
-          <div class="specs-row"><span>storage</span><span>photon-os file system 512gb</span></div>
-          <div class="specs-row"><span>display</span><span>integrated display 768p</span></div>
+          <div class="specs-row"><span>storage</span><span>illusionary-os file system 512gb</span></div>
+          <div class="specs-row"><span>display</span><span>built-in display (768p)</span></div>
           <div class="specs-row"><span>uptime</span><span id="specsUptime">0:00</span></div>
         </div>
       </div>
@@ -1790,6 +2059,8 @@
       <button class="game-tile" data-game="snake">snake <span class="arrow">›</span></button>
       <button class="game-tile" data-game="g2048">2048 <span class="arrow">›</span></button>
       <button class="game-tile" data-game="mines">minesweeper <span class="arrow">›</span></button>
+      <button class="game-tile" data-game="reflex">reflex <span class="arrow">›</span></button>
+      <button class="game-tile" data-game="wordle">wordle <span class="arrow">›</span></button>
     </div>
 
     <div class="game-stage" id="stageSnake" hidden>
@@ -1846,6 +2117,39 @@
       </div>
       <div class="mine-board" id="minesBoard"></div>
       <div class="game-overlay" id="minesOverlay">&nbsp;</div>
+    </div>
+
+    <div class="game-stage" id="stageReflex" hidden>
+      <div class="game-settings">
+        <select id="reflexGridSelect">
+          <option value="3" selected>grid: 3×3</option>
+          <option value="4">grid: 4×4</option>
+          <option value="6">grid: 6×6</option>
+        </select>
+        <select id="reflexRoundSelect">
+          <option value="10">round: 10s</option>
+          <option value="20" selected>round: 20s</option>
+          <option value="30">round: 30s</option>
+          <option value="60">round: 60s</option>
+        </select>
+      </div>
+      <div class="game-hud">
+        <span id="reflexScore">score: 0</span>
+        <span id="reflexTime">time: 20</span>
+        <button id="reflexRestart">restart</button>
+      </div>
+      <div class="reflex-board" id="reflexBoard"></div>
+      <div class="game-overlay" id="reflexOverlay">&nbsp;</div>
+    </div>
+
+    <div class="game-stage" id="stageWordle" hidden>
+      <div class="game-hud">
+        <span id="wordleStatus">guess the word</span>
+        <button id="wordleRestart">new word</button>
+      </div>
+      <div class="wordle-board" id="wordleBoard"></div>
+      <div class="wordle-keyboard" id="wordleKeyboard"></div>
+      <div class="game-overlay" id="wordleOverlay">&nbsp;</div>
     </div>
   </div>
 
@@ -2000,6 +2304,16 @@
 
   // (background dot grid is handled via CSS on #dotLayer)
 
+  // blur any button right after it's clicked, so a later physical Enter
+  // press can't re-activate it via the browser's native focused-button behavior
+  // (this was the cause of the wordle "board wipes on Enter" bug: the "new
+  // word" button stayed focused, so Enter both submitted the guess AND
+  // re-clicked the still-focused restart button)
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button');
+    if(btn) setTimeout(()=> btn.blur(), 0);
+  });
+
   // ---------- background wash blocks ----------
   const washLayer = document.getElementById('washLayer');
   const washRects = [
@@ -2031,27 +2345,23 @@
   setInterval(tick, 1000);
 
   // ---------- quotes ----------
-  const quotes = [
-    "still loading, please stand by",
-    "chaotic good since day one",
-    "current status: definitely fine",
-    "running on vibes and caffeine",
-    "circuit's live, don't touch",
-    "made with 240 degrees of blue",
-    "illusionary.exe is running",
-  ];
+  // quotes is loaded from quotes.js (a separate list of ~60), included
+  // via <script src="quotes.js"> before this script tag.
+  const quotes = QUOTES;
   const quoteEl = document.getElementById('quote');
   let qi = 0;
   function rotateQuote(){
     quoteEl.style.opacity = 0;
     setTimeout(()=>{
-      qi = (qi+1) % quotes.length;
+      let next;
+      do{ next = Math.floor(Math.random() * quotes.length); } while(next === qi && quotes.length > 1);
+      qi = next;
       quoteEl.textContent = quotes[qi];
       quoteEl.style.opacity = 1;
     }, 400);
   }
   quoteEl.textContent = quotes[0];
-  setInterval(rotateQuote, 7000);
+  setInterval(rotateQuote, 18000);
 
   // ---------- drawer ----------
   const drawer = document.getElementById('drawer');
@@ -2102,6 +2412,9 @@
       }
       if(app === 'search'){
         openSearch();
+      }
+      if(app === 'todo'){
+        openTodo();
       }
       if(app === 'tools'){
         openTools();
@@ -2223,11 +2536,24 @@
   document.querySelectorAll('.notes-fmt-btn').forEach(btn=>{
     btn.addEventListener('mousedown', e => e.preventDefault()); // don't steal focus from notesArea
     btn.addEventListener('click', ()=>{
-      notesArea.focus();
-      restoreNotesSelection();
       document.execCommand(btn.dataset.cmd, false, null);
-      saveNotesSelection();
+      updateNotesFmtButtonStates();
     });
+  });
+
+  function updateNotesFmtButtonStates(){
+    document.querySelectorAll('.notes-fmt-btn').forEach(btn=>{
+      try{
+        const on = document.queryCommandState(btn.dataset.cmd);
+        btn.classList.toggle('active', on);
+      }catch(e){ /* command not supported here, ignore */ }
+    });
+  }
+  notesArea.addEventListener('keyup', updateNotesFmtButtonStates);
+  notesArea.addEventListener('mouseup', updateNotesFmtButtonStates);
+  notesArea.addEventListener('click', updateNotesFmtButtonStates);
+  document.addEventListener('selectionchange', ()=>{
+    if(document.activeElement === notesArea) updateNotesFmtButtonStates();
   });
 
   document.getElementById('notesFontSize').addEventListener('change', (e)=>{
@@ -2247,8 +2573,14 @@
     return '<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M8 9h8M8 13h8M8 17h4"/></svg>';
   }
 
+  function drawIconSvg(){
+    return '<svg viewBox="0 0 24 24"><path d="M3 21l1.5-5L16 4.5a2.1 2.1 0 0 1 3 3L7.5 19 3 21z"/></svg>';
+  }
+
   async function renderFileList(){
-    const list = await loadIndex();
+    const files = (await loadIndex()).map(f => ({ ...f, kind: 'file' }));
+    const drawings = (await loadDrawIndex()).map(d => ({ ...d, kind: 'drawing' }));
+    const list = files.concat(drawings);
     list.sort((a,b) => (b.updatedAt||0) - (a.updatedAt||0));
     if(list.length === 0){
       fileListEl.innerHTML = '<div class="file-list-empty">no files yet — create one above</div>';
@@ -2259,7 +2591,7 @@
       const row = document.createElement('div');
       row.className = 'file-row';
       row.innerHTML = `
-        <span class="file-icon">${fileIconSvg()}</span>
+        <span class="file-icon">${f.kind === 'drawing' ? drawIconSvg() : fileIconSvg()}</span>
         <span class="file-meta">
           <div class="file-name"></div>
           <div class="file-updated"></div>
@@ -2268,14 +2600,29 @@
       `;
       row.querySelector('.file-name').textContent = f.name;
       row.querySelector('.file-updated').textContent = formatUpdated(f.updatedAt);
-      row.querySelector('.file-meta').addEventListener('click', ()=> openFile(f.id, f.name));
-      row.querySelector('.file-icon').addEventListener('click', ()=> openFile(f.id, f.name));
+
+      const openThis = ()=>{
+        if(f.kind === 'drawing'){
+          storageWindow.classList.remove('open');
+          drawWindow.classList.add('open');
+          loadDrawing(f);
+        }else{
+          openFile(f.id, f.name);
+        }
+      };
+      row.querySelector('.file-meta').addEventListener('click', openThis);
+      row.querySelector('.file-icon').addEventListener('click', openThis);
+
       row.querySelector('.file-delete').addEventListener('click', async (e)=>{
         e.stopPropagation();
-        try{
-          await window.storage.delete(fileKey(f.id), false);
-        }catch(err){ /* key may already be gone */ }
-        await removeIndexEntry(f.id);
+        if(f.kind === 'drawing'){
+          try{ await window.storage.delete(drawingKey(f.id), false); }catch(err){ /* already gone */ }
+          const list2 = await loadDrawIndex();
+          await saveDrawIndex(list2.filter(x => x.id !== f.id));
+        }else{
+          try{ await window.storage.delete(fileKey(f.id), false); }catch(err){ /* key may already be gone */ }
+          await removeIndexEntry(f.id);
+        }
         showToast('deleted ' + f.name);
         renderFileList();
       });
@@ -2433,21 +2780,26 @@
   // ---------- timer / stopwatch ----------
   const tabStopwatch = document.getElementById('tabStopwatch');
   const tabCountdown = document.getElementById('tabCountdown');
+  const tabPomodoro = document.getElementById('tabPomodoro');
   const paneStopwatch = document.getElementById('paneStopwatch');
   const paneCountdown = document.getElementById('paneCountdown');
+  const panePomodoro = document.getElementById('panePomodoro');
 
-  tabStopwatch.addEventListener('click', ()=>{
-    tabStopwatch.classList.add('active');
-    tabCountdown.classList.remove('active');
-    paneStopwatch.hidden = false;
-    paneCountdown.hidden = true;
-  });
-  tabCountdown.addEventListener('click', ()=>{
-    tabCountdown.classList.add('active');
-    tabStopwatch.classList.remove('active');
-    paneCountdown.hidden = false;
-    paneStopwatch.hidden = true;
-  });
+  const timerTabs = [
+    { tab: tabStopwatch, pane: paneStopwatch },
+    { tab: tabCountdown, pane: paneCountdown },
+    { tab: tabPomodoro, pane: panePomodoro },
+  ];
+  function selectTimerTab(chosen){
+    timerTabs.forEach(({tab, pane})=>{
+      const isChosen = tab === chosen;
+      tab.classList.toggle('active', isChosen);
+      pane.hidden = !isChosen;
+    });
+  }
+  tabStopwatch.addEventListener('click', ()=> selectTimerTab(tabStopwatch));
+  tabCountdown.addEventListener('click', ()=> selectTimerTab(tabCountdown));
+  tabPomodoro.addEventListener('click', ()=> selectTimerTab(tabPomodoro));
 
   // -- stopwatch --
   const swDisplay = document.getElementById('swDisplay');
@@ -2563,6 +2915,90 @@
     ctStartStop.textContent = 'start';
   });
 
+  // -- pomodoro --
+  const pomoWorkSelect = document.getElementById('pomoWorkSelect');
+  const pomoBreakSelect = document.getElementById('pomoBreakSelect');
+  const pomoPhaseLabel = document.getElementById('pomoPhaseLabel');
+  const pomoDisplay = document.getElementById('pomoDisplay');
+  const pomoCycleLabel = document.getElementById('pomoCycleLabel');
+  const pomoStartStop = document.getElementById('pomoStartStop');
+
+  const POMO_SESSIONS_PER_LONG_BREAK = 4;
+  let pomoPhase = 'focus'; // 'focus' | 'break' | 'longbreak'
+  let pomoSession = 1;
+  let pomoRemaining = 25 * 60;
+  let pomoRunning = false;
+  let pomoIntervalId = null;
+
+  function pomoPhaseSeconds(){
+    if(pomoPhase === 'focus') return parseInt(pomoWorkSelect.value, 10) * 60;
+    if(pomoPhase === 'longbreak') return 15 * 60;
+    return parseInt(pomoBreakSelect.value, 10) * 60;
+  }
+  function pomoPhaseName(){
+    if(pomoPhase === 'focus') return 'focus session';
+    if(pomoPhase === 'longbreak') return 'long break';
+    return 'short break';
+  }
+  function pomoRenderIdle(){
+    pomoPhaseLabel.textContent = pomoPhaseName();
+    pomoDisplay.textContent = fmtCountdown(pomoRemaining);
+    pomoCycleLabel.textContent = `session ${pomoSession} of ${POMO_SESSIONS_PER_LONG_BREAK}`;
+  }
+  pomoRenderIdle();
+
+  function pomoResetToPhaseStart(){
+    pomoRemaining = pomoPhaseSeconds();
+    pomoRenderIdle();
+  }
+
+  pomoWorkSelect.addEventListener('change', ()=>{ if(pomoPhase==='focus' && !pomoRunning) pomoResetToPhaseStart(); });
+  pomoBreakSelect.addEventListener('change', ()=>{ if(pomoPhase==='break' && !pomoRunning) pomoResetToPhaseStart(); });
+
+  function pomoAdvancePhase(){
+    if(pomoPhase === 'focus'){
+      pomoPhase = (pomoSession % POMO_SESSIONS_PER_LONG_BREAK === 0) ? 'longbreak' : 'break';
+    }else{
+      if(pomoPhase === 'longbreak') pomoSession = 1;
+      else pomoSession++;
+      pomoPhase = 'focus';
+    }
+    pomoRemaining = pomoPhaseSeconds();
+  }
+
+  document.getElementById('pomoStartStop').addEventListener('click', ()=>{
+    if(!pomoRunning){
+      pomoRunning = true;
+      pomoStartStop.textContent = 'pause';
+      pomoIntervalId = setInterval(()=>{
+        pomoRemaining--;
+        pomoDisplay.textContent = fmtCountdown(pomoRemaining);
+        if(pomoRemaining <= 0){
+          clearInterval(pomoIntervalId);
+          pomoRunning = false;
+          pomoStartStop.textContent = 'start';
+          const finishedPhase = pomoPhaseName();
+          pomoAdvancePhase();
+          pomoRenderIdle();
+          showNotification('photon os', finishedPhase + ' done — ' + pomoPhaseName() + ' next');
+        }
+      }, 1000);
+    }else{
+      pomoRunning = false;
+      clearInterval(pomoIntervalId);
+      pomoStartStop.textContent = 'start';
+    }
+  });
+
+  document.getElementById('pomoReset').addEventListener('click', ()=>{
+    pomoRunning = false;
+    clearInterval(pomoIntervalId);
+    pomoPhase = 'focus';
+    pomoSession = 1;
+    pomoStartStop.textContent = 'start';
+    pomoResetToPhaseStart();
+  });
+
   // ---------- rng ----------
   const rngResult = document.getElementById('rngResult');
   const rngMin = document.getElementById('rngMin');
@@ -2603,6 +3039,8 @@
     snake: document.getElementById('stageSnake'),
     g2048: document.getElementById('stage2048'),
     mines: document.getElementById('stageMines'),
+    reflex: document.getElementById('stageReflex'),
+    wordle: document.getElementById('stageWordle'),
   };
   let activeGame = null;
   let gameLoops = []; // interval ids to clear on leave
@@ -2643,6 +3081,8 @@
       if(game === 'snake') snakeStart();
       if(game === 'g2048') g2048Start();
       if(game === 'mines') minesStart();
+      if(game === 'reflex') reflexStart();
+      if(game === 'wordle') wordleStart();
     });
   });
 
@@ -3123,6 +3563,348 @@
       });
       minesBoardEl.appendChild(div);
     }
+  }
+
+  // ================= REFLEX =================
+  const reflexBoardEl = document.getElementById('reflexBoard');
+  const reflexScoreEl = document.getElementById('reflexScore');
+  const reflexTimeEl = document.getElementById('reflexTime');
+  const reflexOverlay = document.getElementById('reflexOverlay');
+  const reflexGridSelect = document.getElementById('reflexGridSelect');
+  const reflexRoundSelect = document.getElementById('reflexRoundSelect');
+  const REFLEX_TARGET_LIFE_MS = 700;
+
+  let REFLEX_GRID_SIZE = 3;
+  let REFLEX_CELLS = 9;
+  let REFLEX_ROUND_SECONDS = 20;
+
+  let reflexCellEls = [];
+  let reflexScore = 0;
+  let reflexTimeLeft = REFLEX_ROUND_SECONDS;
+  let reflexActiveCell = -1;
+  let reflexRunning = false;
+  let reflexCountdownId = null;
+  let reflexSpawnTimeoutId = null;
+  let reflexLifeTimeoutId = null;
+
+  function reflexRenderBoard(){
+    reflexBoardEl.style.gridTemplateColumns = `repeat(${REFLEX_GRID_SIZE}, 1fr)`;
+    reflexBoardEl.innerHTML = '';
+    reflexCellEls = [];
+    for(let i=0;i<REFLEX_CELLS;i++){
+      const cell = document.createElement('div');
+      cell.className = 'reflex-cell';
+      cell.addEventListener('click', ()=> reflexHit(i));
+      reflexBoardEl.appendChild(cell);
+      reflexCellEls.push(cell);
+    }
+  }
+
+  function reflexStart(){
+    REFLEX_GRID_SIZE = parseInt(reflexGridSelect.value, 10);
+    REFLEX_CELLS = REFLEX_GRID_SIZE * REFLEX_GRID_SIZE;
+    REFLEX_ROUND_SECONDS = parseInt(reflexRoundSelect.value, 10);
+
+    reflexScore = 0;
+    reflexTimeLeft = REFLEX_ROUND_SECONDS;
+    reflexActiveCell = -1;
+    reflexRunning = true;
+    reflexScoreEl.textContent = 'score: 0';
+    reflexTimeEl.textContent = 'time: ' + REFLEX_ROUND_SECONDS;
+    reflexOverlay.innerHTML = '&nbsp;';
+    reflexRenderBoard();
+
+    clearInterval(reflexCountdownId);
+    clearTimeout(reflexSpawnTimeoutId);
+    clearTimeout(reflexLifeTimeoutId);
+
+    reflexCountdownId = setInterval(()=>{
+      reflexTimeLeft--;
+      reflexTimeEl.textContent = 'time: ' + Math.max(0, reflexTimeLeft);
+      if(reflexTimeLeft <= 0) reflexEnd();
+    }, 1000);
+    gameLoops.push(reflexCountdownId);
+
+    reflexSpawnNext();
+  }
+  document.getElementById('reflexRestart').addEventListener('click', reflexStart);
+  reflexGridSelect.addEventListener('change', reflexStart);
+  reflexRoundSelect.addEventListener('change', reflexStart);
+
+  function reflexSpawnNext(){
+    if(!reflexRunning) return;
+    let next;
+    do{ next = Math.floor(Math.random() * REFLEX_CELLS); } while(next === reflexActiveCell);
+    reflexActiveCell = next;
+    reflexCellEls[next].classList.add('active');
+
+    clearTimeout(reflexLifeTimeoutId);
+    reflexLifeTimeoutId = setTimeout(()=>{
+      if(reflexActiveCell !== -1){
+        reflexCellEls[reflexActiveCell].classList.remove('active');
+        reflexActiveCell = -1;
+      }
+      reflexSpawnTimeoutId = setTimeout(reflexSpawnNext, 150 + Math.random()*250);
+    }, REFLEX_TARGET_LIFE_MS);
+  }
+
+  function reflexHit(index){
+    if(!reflexRunning || index !== reflexActiveCell) return;
+    reflexScore++;
+    reflexScoreEl.textContent = 'score: ' + reflexScore;
+    reflexCellEls[index].classList.remove('active');
+    reflexActiveCell = -1;
+    clearTimeout(reflexLifeTimeoutId);
+    reflexSpawnTimeoutId = setTimeout(reflexSpawnNext, 120);
+  }
+
+  function reflexEnd(){
+    reflexRunning = false;
+    clearInterval(reflexCountdownId);
+    clearTimeout(reflexSpawnTimeoutId);
+    clearTimeout(reflexLifeTimeoutId);
+    if(reflexActiveCell !== -1) reflexCellEls[reflexActiveCell].classList.remove('active');
+    reflexActiveCell = -1;
+    const avgMs = reflexScore > 0 ? Math.round((REFLEX_ROUND_SECONDS * 1000) / reflexScore) : null;
+    reflexOverlay.textContent = 'final score: ' + reflexScore
+      + (avgMs !== null ? ' — ' + avgMs + 'ms per target' : '')
+      + ' — tap restart';
+  }
+
+  // ================= WORDLE =================
+  // WORDLE_WORDS is loaded from words.js (a separate ~4,667-word list),
+  // included via <script src="words.js"> before this script tag.
+  const wordleBoardEl = document.getElementById('wordleBoard');
+  const wordleKeyboardEl = document.getElementById('wordleKeyboard');
+  const wordleStatusEl = document.getElementById('wordleStatus');
+  const wordleOverlay = document.getElementById('wordleOverlay');
+
+  let wordleTarget = '';
+  let wordleGuesses = [];
+  let wordleRow = 0;
+  let wordleCol = 0;
+  let wordleOver = false;
+  let wordleTileEls = [];
+  let wordleKeyEls = {};
+  let wordleLetterStatus = {};
+
+  function wordleStart(){
+    wordleTarget = WORDLE_WORDS[Math.floor(Math.random() * WORDLE_WORDS.length)];
+    wordleGuesses = Array.from({length:6}, () => '');
+    wordleRow = 0;
+    wordleCol = 0;
+    wordleOver = false;
+    wordleLetterStatus = {};
+    wordleStatusEl.textContent = 'guess the word';
+    wordleOverlay.innerHTML = '&nbsp;';
+    wordleRenderBoard();
+    wordleRenderKeyboard();
+  }
+  document.getElementById('wordleRestart').addEventListener('click', wordleStart);
+
+  function wordleRenderBoard(){
+    wordleBoardEl.innerHTML = '';
+    wordleTileEls = [];
+    for(let r=0;r<6;r++){
+      const row = document.createElement('div');
+      row.className = 'wordle-row';
+      const tiles = [];
+      for(let c=0;c<5;c++){
+        const tile = document.createElement('div');
+        tile.className = 'wordle-tile';
+        row.appendChild(tile);
+        tiles.push(tile);
+      }
+      wordleBoardEl.appendChild(row);
+      wordleTileEls.push(tiles);
+    }
+  }
+
+  function wordleRenderKeyboard(){
+    wordleKeyboardEl.innerHTML = '';
+    wordleKeyEls = {};
+    const rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+    rows.forEach((rowStr, i)=>{
+      const rowEl = document.createElement('div');
+      rowEl.className = 'wordle-krow';
+      if(i === 2){
+        const enterKey = document.createElement('button');
+        enterKey.className = 'wordle-key wide';
+        enterKey.textContent = 'enter';
+        enterKey.addEventListener('click', wordleSubmit);
+        rowEl.appendChild(enterKey);
+      }
+      rowStr.split('').forEach(letter=>{
+        const key = document.createElement('button');
+        key.className = 'wordle-key';
+        key.textContent = letter;
+        key.addEventListener('click', ()=> wordleInputLetter(letter));
+        wordleKeyEls[letter] = key;
+        rowEl.appendChild(key);
+      });
+      if(i === 2){
+        const backKey = document.createElement('button');
+        backKey.className = 'wordle-key wide';
+        backKey.textContent = '⌫';
+        backKey.addEventListener('click', wordleBackspace);
+        rowEl.appendChild(backKey);
+      }
+      wordleKeyboardEl.appendChild(rowEl);
+    });
+  }
+
+  function wordleInputLetter(letter){
+    if(wordleOver || wordleCol >= 5) return;
+    wordleGuesses[wordleRow] += letter;
+    const tile = wordleTileEls[wordleRow][wordleCol];
+    tile.textContent = letter;
+    tile.classList.add('filled');
+    wordleCol++;
+  }
+
+  function wordleBackspace(){
+    if(wordleOver || wordleCol <= 0) return;
+    wordleCol--;
+    wordleGuesses[wordleRow] = wordleGuesses[wordleRow].slice(0, -1);
+    const tile = wordleTileEls[wordleRow][wordleCol];
+    tile.textContent = '';
+    tile.classList.remove('filled');
+  }
+
+  function wordleSubmit(){
+    if(wordleOver) return;
+    if(wordleCol < 5){ showToast('not enough letters'); return; }
+    const guess = wordleGuesses[wordleRow];
+    if(!WORDLE_WORDS.includes(guess)){ showToast('not in word list'); return; }
+
+    const target = wordleTarget.split('');
+    const guessArr = guess.split('');
+    const result = Array(5).fill('absent');
+    const used = Array(5).fill(false);
+
+    for(let i=0;i<5;i++){
+      if(guessArr[i] === target[i]){ result[i] = 'correct'; used[i] = true; }
+    }
+    for(let i=0;i<5;i++){
+      if(result[i] === 'correct') continue;
+      const idx = target.findIndex((t, j) => t === guessArr[i] && !used[j]);
+      if(idx !== -1){ result[i] = 'present'; used[idx] = true; }
+    }
+
+    const rank = { absent:0, present:1, correct:2 };
+    for(let i=0;i<5;i++){
+      wordleTileEls[wordleRow][i].classList.add(result[i]);
+      const letter = guessArr[i];
+      if(!wordleLetterStatus[letter] || rank[result[i]] > rank[wordleLetterStatus[letter]]){
+        wordleLetterStatus[letter] = result[i];
+        const keyEl = wordleKeyEls[letter];
+        if(keyEl){
+          keyEl.classList.remove('correct','present','absent');
+          keyEl.classList.add(result[i]);
+        }
+      }
+    }
+
+    if(guess === wordleTarget){
+      wordleOver = true;
+      const n = wordleRow + 1;
+      wordleStatusEl.textContent = 'solved!';
+      wordleOverlay.textContent = 'nice! solved in ' + n + ' guess' + (n===1?'':'es') + ' — new word to play again';
+      return;
+    }
+
+    wordleRow++;
+    wordleCol = 0;
+    if(wordleRow >= 6){
+      wordleOver = true;
+      wordleOverlay.textContent = 'word was: ' + wordleTarget + ' — new word to try again';
+    }
+  }
+
+  window.addEventListener('keydown', (e)=>{
+    if(activeGame !== 'wordle') return;
+    if(/^[a-zA-Z]$/.test(e.key) && e.key.length === 1) wordleInputLetter(e.key.toUpperCase());
+    else if(e.key === 'Backspace') wordleBackspace();
+    else if(e.key === 'Enter') wordleSubmit();
+  });
+
+  // ---------- todo ----------
+  const todoWindow = document.getElementById('todoWindow');
+  const todoInput = document.getElementById('todoInput');
+  const todoList = document.getElementById('todoList');
+  const todoCount = document.getElementById('todoCount');
+  const TODO_KEY = 'illusionary-os:todos';
+
+  function openTodo(){
+    closeDrawer();
+    todoWindow.classList.add('open');
+    todoInput.value = '';
+    renderTodos();
+  }
+  document.getElementById('todoClose').addEventListener('click', ()=>{
+    todoWindow.classList.remove('open');
+  });
+
+  async function loadTodos(){
+    try{
+      const result = await window.storage.get(TODO_KEY, false);
+      return result ? JSON.parse(result.value) : [];
+    }catch(e){ return []; }
+  }
+  async function saveTodos(list){
+    try{ await window.storage.set(TODO_KEY, JSON.stringify(list), false); }catch(e){ /* best effort */ }
+  }
+
+  async function addTodo(){
+    const text = todoInput.value.trim();
+    if(!text) return;
+    const list = await loadTodos();
+    list.unshift({ id: 't' + Date.now(), text, done: false, createdAt: Date.now() });
+    await saveTodos(list);
+    todoInput.value = '';
+    renderTodos();
+  }
+  document.getElementById('todoAddBtn').addEventListener('click', addTodo);
+  todoInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') addTodo(); });
+
+  document.getElementById('todoClearDone').addEventListener('click', async ()=>{
+    const list = await loadTodos();
+    await saveTodos(list.filter(t => !t.done));
+    renderTodos();
+  });
+
+  async function renderTodos(){
+    const list = await loadTodos();
+    const doneCount = list.filter(t => t.done).length;
+    todoCount.textContent = `${list.length} task${list.length===1?'':'s'} (${doneCount} done)`;
+    if(list.length === 0){
+      todoList.innerHTML = '<div class="file-list-empty">no tasks yet — add one above</div>';
+      return;
+    }
+    todoList.innerHTML = '';
+    list.forEach(t => {
+      const row = document.createElement('div');
+      row.className = 'todo-row' + (t.done ? ' done' : '');
+      row.innerHTML = `
+        <input type="checkbox" ${t.done ? 'checked' : ''}>
+        <span class="todo-text"></span>
+        <button class="todo-delete" aria-label="delete">×</button>
+      `;
+      row.querySelector('.todo-text').textContent = t.text;
+      row.querySelector('input[type=checkbox]').addEventListener('change', async ()=>{
+        const list2 = await loadTodos();
+        const item = list2.find(x => x.id === t.id);
+        if(item) item.done = !item.done;
+        await saveTodos(list2);
+        renderTodos();
+      });
+      row.querySelector('.todo-delete').addEventListener('click', async ()=>{
+        const list2 = await loadTodos();
+        await saveTodos(list2.filter(x => x.id !== t.id));
+        renderTodos();
+      });
+      todoList.appendChild(row);
+    });
   }
 
   // ---------- search ----------
@@ -3681,6 +4463,12 @@
     signOut();
   });
 
+  document.querySelectorAll('.settings-link-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      window.open(btn.dataset.url, '_blank');
+    });
+  });
+
   const bootTime = Date.now();
   const specsUptime = document.getElementById('specsUptime');
   setInterval(()=>{
@@ -3689,6 +4477,27 @@
     const s = secs % 60;
     specsUptime.textContent = m + ':' + pad(s);
   }, 1000);
+
+  // ---------- idle timeout -> return to standby home screen ----------
+  const IDLE_TIMEOUT_MS = 5 * 60 * 1000;
+  let idleTimer = null;
+
+  function returnToHomeScreen(){
+    if(!signInScreen.classList.contains('hide')) return; // not signed in, nothing to return from
+    document.querySelectorAll('.app-window.open').forEach(w => w.classList.remove('open'));
+    closeDrawer();
+    notifOverlay.hidden = true;
+  }
+
+  function resetIdleTimer(){
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(returnToHomeScreen, IDLE_TIMEOUT_MS);
+  }
+  ['mousemove','mousedown','keydown','touchstart','scroll','pointerdown'].forEach(evt=>{
+    window.addEventListener(evt, resetIdleTimer, { passive: true });
+  });
+  resetIdleTimer();
+
 </script>
 
 </body>
