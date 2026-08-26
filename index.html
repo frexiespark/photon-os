@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>illusionary // standby</title>
+<title>PHOTON OS // STANDBY</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -434,18 +434,58 @@
   }
   .app-window-head .btns{ display:flex; gap:8px; }
 
+  .notes-toolbar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 16px;
+    border-bottom:2px solid var(--peri-200);
+    flex-wrap:wrap;
+  }
+  .notes-fmt-btn{
+    background:var(--peri-100);
+    border:2px solid var(--blue-600);
+    color:var(--blue-600);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    padding:6px 11px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .notes-fmt-btn:active, .notes-fmt-btn.active{ background:var(--blue-600); color:var(--white); }
+  .notes-fmt-sep{
+    width:1px;
+    height:20px;
+    background:var(--peri-300);
+    margin:0 4px;
+  }
+  .notes-fmt-size{
+    background:var(--peri-100);
+    border:2px solid var(--blue-600);
+    color:var(--blue-600);
+    font-family:inherit;
+    font-size:11px;
+    font-weight:700;
+    padding:6px 8px;
+    border-radius:8px;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
   #notesArea{
     flex:1;
-    border:none;
     outline:none;
-    resize:none;
     padding:20px 24px;
     font-family:'JetBrains Mono', monospace;
     font-size:15px;
     color:var(--blue-900);
     line-height:1.6;
+    overflow-y:auto;
   }
-  #notesArea::placeholder{ color:var(--peri-300); }
+  #notesArea:empty:before{
+    content: attr(data-placeholder);
+    color:var(--peri-300);
+  }
 
   .save-status{
     padding:8px 24px 16px 24px;
@@ -1165,6 +1205,87 @@
     color:var(--white);
   }
   .draw-name-row button:active{ opacity:0.8; }
+  .draw-transparent-toggle{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+    font-size:11px;
+    color:var(--blue-700);
+    text-transform:lowercase;
+  }
+  .draw-transparent-toggle input{ accent-color:var(--blue-600); }
+
+  .draw-tool-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+  }
+  .draw-tool-btn{
+    background:var(--peri-100);
+    border:2px solid var(--blue-600);
+    color:var(--blue-600);
+    font-family:inherit;
+    font-weight:700;
+    font-size:12px;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    text-transform:lowercase;
+  }
+  .draw-tool-btn.active{ background:var(--blue-600); color:var(--white); }
+  .draw-tool-spacer{ flex:1; }
+  .draw-icon-btn{
+    background:var(--peri-100);
+    border:2px solid var(--blue-600);
+    color:var(--blue-600);
+    font-size:16px;
+    font-weight:800;
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .draw-icon-btn:active{ background:var(--peri-300); }
+  .draw-icon-btn:disabled{ opacity:0.3; cursor:default; }
+
+  .draw-layer-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:10px;
+  }
+  .draw-layers{
+    display:flex;
+    gap:6px;
+  }
+  .draw-layer-btn{
+    width:30px;
+    height:30px;
+    border-radius:8px;
+    border:2px solid var(--blue-600);
+    background:var(--peri-100);
+    color:var(--blue-600);
+    font-family:inherit;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+  }
+  .draw-layer-btn.active{ background:var(--blue-600); color:var(--white); }
+  .draw-opacity{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .draw-opacity label{
+    font-size:11px;
+    color:var(--blue-700);
+    text-transform:lowercase;
+    flex:none;
+  }
+  .draw-opacity input[type=range]{ flex:1; accent-color:var(--blue-600); }
   #drawCanvas{
     background:var(--white);
     border:3px solid var(--pure-blue);
@@ -1407,7 +1528,23 @@
         <button id="notesClose">close</button>
       </div>
     </div>
-    <textarea id="notesArea" placeholder="type here..."></textarea>
+    <div class="notes-toolbar">
+      <button class="notes-fmt-btn" data-cmd="bold"><b>B</b></button>
+      <button class="notes-fmt-btn" data-cmd="italic"><i>I</i></button>
+      <button class="notes-fmt-btn" data-cmd="underline"><u>U</u></button>
+      <button class="notes-fmt-btn" data-cmd="strikeThrough"><s>S</s></button>
+      <span class="notes-fmt-sep"></span>
+      <button class="notes-fmt-btn" data-cmd="insertUnorderedList">• list</button>
+      <button class="notes-fmt-btn" data-cmd="insertOrderedList">1. list</button>
+      <span class="notes-fmt-sep"></span>
+      <select class="notes-fmt-size" id="notesFontSize">
+        <option value="2">small</option>
+        <option value="3" selected>normal</option>
+        <option value="5">large</option>
+        <option value="7">huge</option>
+      </select>
+    </div>
+    <div id="notesArea" class="notes-editable" contenteditable="true" data-placeholder="type here..."></div>
     <div class="save-status" id="notesStatus">unsaved</div>
   </div>
 
@@ -1568,11 +1705,40 @@
             <input type="range" id="brushSize" min="1" max="30" value="4">
           </div>
         </div>
+
+        <div class="draw-tool-row">
+          <button class="draw-tool-btn active" id="toolBrush" data-tool="brush">brush</button>
+          <button class="draw-tool-btn" id="toolFill" data-tool="fill">fill</button>
+          <button class="draw-tool-btn" id="toolErase" data-tool="erase">erase</button>
+          <span class="draw-tool-spacer"></span>
+          <button class="draw-icon-btn" id="drawUndo" title="undo (ctrl+z)">↺</button>
+          <button class="draw-icon-btn" id="drawRedo" title="redo (ctrl+y)">↻</button>
+        </div>
+
+        <div class="draw-layer-row">
+          <div class="draw-layers" id="drawLayers">
+            <button class="draw-layer-btn active" data-layer="0">1</button>
+            <button class="draw-layer-btn" data-layer="1">2</button>
+            <button class="draw-layer-btn" data-layer="2">3</button>
+            <button class="draw-layer-btn" data-layer="3">4</button>
+            <button class="draw-layer-btn" data-layer="4">5</button>
+          </div>
+          <div class="draw-opacity">
+            <label>opacity</label>
+            <input type="range" id="layerOpacity" min="0" max="100" value="100">
+          </div>
+        </div>
+
         <div class="draw-name-row">
           <input type="text" id="drawNameInput" placeholder="untitled">
           <button id="drawClear">clear</button>
           <button id="drawSave">save</button>
+          <button id="drawDownload">png</button>
         </div>
+        <label class="draw-transparent-toggle">
+          <input type="checkbox" id="drawTransparentBg">
+          transparent background (png only)
+        </label>
       </div>
       <canvas id="drawCanvas"></canvas>
       <div class="save-status" id="drawStatus">&nbsp;</div>
@@ -1599,12 +1765,12 @@
       <div>
         <div class="settings-section-title">about this pc</div>
         <div class="specs-list">
-          <div class="specs-row"><span>os</span><span>photon os v1.3</span></div>
+          <div class="specs-row"><span>os</span><span>photon os 1.4</span></div>
           <div class="specs-row"><span>signed in as</span><span>illusionary</span></div>
           <div class="specs-row"><span>chipset</span><span>lumineX core x1</span></div>
-          <div class="specs-row"><span>memory</span><span>16 gb (hue-240)</span></div>
-          <div class="specs-row"><span>storage</span><span>illusionary-os file system</span></div>
-          <div class="specs-row"><span>display</span><span>circuit-blue render engine</span></div>
+          <div class="specs-row"><span>memory</span><span>16 gb</span></div>
+          <div class="specs-row"><span>storage</span><span>photon-os file system 512gb</span></div>
+          <div class="specs-row"><span>display</span><span>integrated display 768p</span></div>
           <div class="specs-row"><span>uptime</span><span id="specsUptime">0:00</span></div>
         </div>
       </div>
@@ -1714,21 +1880,30 @@
   let cloudReady = null;
   let cloudDb = null;
 
+  let cloudAvailable = false;
+
   function initCloudStorage(){
+    if(typeof firebase === 'undefined'){
+      console.error('[photon os storage] Firebase SDK did not load (window.firebase is undefined) — check that the gstatic.com script tags in <head> actually loaded (network tab), and that nothing is blocking that domain.');
+      cloudReady = Promise.resolve();
+      return;
+    }
     try{
       firebase.initializeApp(firebaseConfig);
       cloudDb = firebase.firestore();
+      cloudAvailable = true;
       cloudReady = firebase.auth().signInAnonymously().catch(err=>{
-        console.error('Firebase anonymous sign-in failed:', err);
+        console.error('[photon os storage] Firebase anonymous sign-in failed:', err);
       });
     }catch(err){
-      console.error('Firebase init failed:', err);
+      console.error('[photon os storage] Firebase init failed:', err);
       cloudReady = Promise.resolve();
     }
   }
   initCloudStorage();
 
   function kvDocRef(key, shared){
+    if(!cloudAvailable) throw new Error('cloud storage unavailable (Firebase failed to load or init)');
     const owner = shared ? 'shared' : 'users';
     const bucket = shared ? 'photonos' : 'illusionary';
     return cloudDb.collection(owner).doc(bucket).collection('kv').doc(key);
@@ -1736,26 +1911,42 @@
 
   window.storage = {
     async get(key, shared){
-      await cloudReady;
-      const snap = await kvDocRef(key, shared).get();
-      if(!snap.exists) return null;
-      return { key, value: snap.data().value, shared: !!shared };
+      try{
+        await cloudReady;
+        const snap = await kvDocRef(key, shared).get();
+        if(!snap.exists) return null;
+        return { key, value: snap.data().value, shared: !!shared };
+      }catch(err){
+        console.error('[photon os storage] get failed for', key, err);
+        throw err;
+      }
     },
     async set(key, value, shared){
-      await cloudReady;
-      await kvDocRef(key, shared).set({
-        value,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      return { key, value, shared: !!shared };
+      try{
+        await cloudReady;
+        await kvDocRef(key, shared).set({
+          value,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        return { key, value, shared: !!shared };
+      }catch(err){
+        console.error('[photon os storage] set failed for', key, err);
+        throw err;
+      }
     },
     async delete(key, shared){
-      await cloudReady;
-      await kvDocRef(key, shared).delete();
-      return { key, deleted: true, shared: !!shared };
+      try{
+        await cloudReady;
+        await kvDocRef(key, shared).delete();
+        return { key, deleted: true, shared: !!shared };
+      }catch(err){
+        console.error('[photon os storage] delete failed for', key, err);
+        throw err;
+      }
     },
     async list(prefix, shared){
       await cloudReady;
+      if(!cloudAvailable) throw new Error('cloud storage unavailable (Firebase failed to load or init)');
       const owner = shared ? 'shared' : 'users';
       const bucket = shared ? 'photonos' : 'illusionary';
       const col = cloudDb.collection(owner).doc(bucket).collection('kv');
@@ -1985,10 +2176,10 @@
     notesStatus.textContent = 'loading...';
     try{
       const result = await window.storage.get(fileKey(id), false);
-      notesArea.value = result ? result.value : '';
+      notesArea.innerHTML = result ? result.value : '';
       notesStatus.textContent = result ? 'loaded saved file' : 'new, unsaved file';
     }catch(e){
-      notesArea.value = '';
+      notesArea.innerHTML = '';
       notesStatus.textContent = 'new, unsaved file';
     }
     notesArea.focus();
@@ -2003,12 +2194,48 @@
     if(!currentFileId) return;
     notesStatus.textContent = 'saving...';
     try{
-      const result = await window.storage.set(fileKey(currentFileId), notesArea.value, false);
+      const result = await window.storage.set(fileKey(currentFileId), notesArea.innerHTML, false);
       await touchIndexEntry(currentFileId, notesTitle.textContent);
       notesStatus.textContent = result ? 'saved just now' : 'save failed, try again';
     }catch(e){
       notesStatus.textContent = 'save failed, try again';
     }
+  });
+
+  // -- notes formatting toolbar --
+  let notesSavedRange = null;
+  function saveNotesSelection(){
+    const sel = window.getSelection();
+    if(sel.rangeCount > 0 && notesArea.contains(sel.anchorNode)){
+      notesSavedRange = sel.getRangeAt(0);
+    }
+  }
+  function restoreNotesSelection(){
+    if(!notesSavedRange) return;
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(notesSavedRange);
+  }
+  notesArea.addEventListener('keyup', saveNotesSelection);
+  notesArea.addEventListener('mouseup', saveNotesSelection);
+  notesArea.addEventListener('input', saveNotesSelection);
+
+  document.querySelectorAll('.notes-fmt-btn').forEach(btn=>{
+    btn.addEventListener('mousedown', e => e.preventDefault()); // don't steal focus from notesArea
+    btn.addEventListener('click', ()=>{
+      notesArea.focus();
+      restoreNotesSelection();
+      document.execCommand(btn.dataset.cmd, false, null);
+      saveNotesSelection();
+    });
+  });
+
+  document.getElementById('notesFontSize').addEventListener('change', (e)=>{
+    notesArea.focus();
+    restoreNotesSelection();
+    document.execCommand('fontSize', false, e.target.value);
+    saveNotesSelection();
+    e.target.blur();
   });
 
   // ---------- storage browser ----------
@@ -2992,7 +3219,7 @@
     gallery: document.getElementById('drawGallery'),
   };
   const drawSizeSelect = document.getElementById('drawSizeSelect');
-  const drawCanvasEl = document.getElementById('drawCanvas');
+  const drawCanvasEl = document.getElementById('drawCanvas'); // visible compositor
   const drawCtx = drawCanvasEl.getContext('2d');
   const colorSquare = document.getElementById('colorSquare');
   const colorCtx = colorSquare.getContext('2d');
@@ -3002,15 +3229,27 @@
   const drawNameInput = document.getElementById('drawNameInput');
   const drawStatus = document.getElementById('drawStatus');
   const drawFileListEl = document.getElementById('drawFileList');
+  const layerOpacityInput = document.getElementById('layerOpacity');
+  const drawUndoBtn = document.getElementById('drawUndo');
+  const drawRedoBtn = document.getElementById('drawRedo');
 
   const DRAW_INDEX_KEY = 'illusionary-os:drawings-index';
   const drawingKey = id => 'illusionary-os:drawing:' + id;
+  const LAYER_COUNT = 5;
 
-  let drawColor = '#0000ff';
+  let drawColor = 'rgb(0, 0, 255)';
   let drawBrush = 4;
+  let drawTool = 'brush'; // 'brush' | 'fill'
   let drawIsDrawing = false;
   let drawLastX = 0, drawLastY = 0;
   let currentDrawingId = null;
+
+  let drawLayerEls = [];    // offscreen canvases, one per layer
+  let drawLayerCtxs = [];   // their 2d contexts
+  let drawLayerOpacity = [];// 0..1 per layer
+  let activeLayer = 0;
+  let undoStack = [];       // {layerIndex, imageData}
+  let redoStack = [];
 
   function openDraw(){
     closeDrawer();
@@ -3061,6 +3300,9 @@
     colorCtx.fillRect(0,0,w,h);
   }
   renderColorSquare();
+  drawSwatch.style.background = drawColor;
+  colorMarker.style.left = (colorSquare.width - 1) + 'px';
+  colorMarker.style.top = '0px';
 
   function pickColorAt(clientX, clientY){
     const rect = colorSquare.getBoundingClientRect();
@@ -3089,7 +3331,30 @@
     drawBrush = parseInt(brushSizeInput.value, 10);
   });
 
-  // -- canvas setup + drawing --
+  // -- tool selection --
+  document.querySelectorAll('.draw-tool-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      drawTool = btn.dataset.tool;
+      document.querySelectorAll('.draw-tool-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // -- layer selection + opacity --
+  document.querySelectorAll('.draw-layer-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeLayer = parseInt(btn.dataset.layer, 10);
+      document.querySelectorAll('.draw-layer-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      layerOpacityInput.value = Math.round(drawLayerOpacity[activeLayer] * 100);
+    });
+  });
+  layerOpacityInput.addEventListener('input', ()=>{
+    drawLayerOpacity[activeLayer] = parseInt(layerOpacityInput.value, 10) / 100;
+    recompositeDraw();
+  });
+
+  // -- canvas setup --
   document.getElementById('drawStartBtn').addEventListener('click', ()=>{
     const size = parseInt(drawSizeSelect.value, 10);
     currentDrawingId = null;
@@ -3113,10 +3378,36 @@
     drawCanvasEl.height = size;
     drawCanvasEl.style.width = displaySize + 'px';
     drawCanvasEl.style.height = displaySize + 'px';
-    if(blank){
-      drawCtx.fillStyle = '#ffffff';
-      drawCtx.fillRect(0, 0, size, size);
+
+    drawLayerEls = [];
+    drawLayerCtxs = [];
+    drawLayerOpacity = [];
+    for(let i=0;i<LAYER_COUNT;i++){
+      const c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      drawLayerEls.push(c);
+      drawLayerCtxs.push(c.getContext('2d'));
+      drawLayerOpacity.push(1);
     }
+    activeLayer = 0;
+    document.querySelectorAll('.draw-layer-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+    layerOpacityInput.value = 100;
+    undoStack = [];
+    redoStack = [];
+    updateUndoRedoButtons();
+
+    if(blank){
+      recompositeDraw();
+    }
+  }
+
+  function recompositeDraw(){
+    drawCtx.clearRect(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    for(let i=0;i<LAYER_COUNT;i++){
+      drawCtx.globalAlpha = drawLayerOpacity[i];
+      drawCtx.drawImage(drawLayerEls[i], 0, 0);
+    }
+    drawCtx.globalAlpha = 1;
   }
 
   function drawPointFromEvent(e){
@@ -3126,36 +3417,147 @@
     return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
   }
 
+  // -- undo / redo --
+  function updateUndoRedoButtons(){
+    drawUndoBtn.disabled = undoStack.length === 0;
+    drawRedoBtn.disabled = redoStack.length === 0;
+  }
+  function pushUndo(layerIndex){
+    const ctx = drawLayerCtxs[layerIndex];
+    const snap = ctx.getImageData(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    undoStack.push({ layerIndex, imageData: snap });
+    if(undoStack.length > 40) undoStack.shift();
+    redoStack = [];
+    updateUndoRedoButtons();
+  }
+  function doUndo(){
+    if(undoStack.length === 0) return;
+    const last = undoStack.pop();
+    const ctx = drawLayerCtxs[last.layerIndex];
+    const current = ctx.getImageData(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    redoStack.push({ layerIndex: last.layerIndex, imageData: current });
+    ctx.putImageData(last.imageData, 0, 0);
+    recompositeDraw();
+    updateUndoRedoButtons();
+  }
+  function doRedo(){
+    if(redoStack.length === 0) return;
+    const last = redoStack.pop();
+    const ctx = drawLayerCtxs[last.layerIndex];
+    const current = ctx.getImageData(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    undoStack.push({ layerIndex: last.layerIndex, imageData: current });
+    ctx.putImageData(last.imageData, 0, 0);
+    recompositeDraw();
+    updateUndoRedoButtons();
+  }
+  drawUndoBtn.addEventListener('click', doUndo);
+  drawRedoBtn.addEventListener('click', doRedo);
+
+  window.addEventListener('keydown', (e)=>{
+    if(drawStages.canvas.hidden) return;
+    const tag = document.activeElement && document.activeElement.tagName;
+    if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if(e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z'){ e.preventDefault(); doUndo(); }
+    if(e.ctrlKey && (e.key.toLowerCase() === 'y' || (e.shiftKey && e.key.toLowerCase() === 'z'))){
+      e.preventDefault(); doRedo();
+    }
+  });
+
+  // -- bucket fill --
+  function floodFill(ctx, startX, startY, fillColorStr){
+    const w = ctx.canvas.width, h = ctx.canvas.height;
+    startX = Math.floor(startX); startY = Math.floor(startY);
+    if(startX < 0 || startY < 0 || startX >= w || startY >= h) return;
+
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+    const m = fillColorStr.match(/\d+/g).map(Number);
+    const fill = [m[0], m[1], m[2], 255];
+    const startIdx = (startY*w + startX) * 4;
+    const target = [data[startIdx], data[startIdx+1], data[startIdx+2], data[startIdx+3]];
+    if(target[0]===fill[0] && target[1]===fill[1] && target[2]===fill[2] && target[3]===fill[3]) return;
+
+    function matches(i){
+      return data[i]===target[0] && data[i+1]===target[1] && data[i+2]===target[2] && data[i+3]===target[3];
+    }
+    const stack = [[startX, startY]];
+    while(stack.length){
+      const [cx, cy] = stack.pop();
+      if(cx < 0 || cy < 0 || cx >= w || cy >= h) continue;
+      const i = (cy*w + cx) * 4;
+      if(!matches(i)) continue;
+      data[i] = fill[0]; data[i+1] = fill[1]; data[i+2] = fill[2]; data[i+3] = fill[3];
+      stack.push([cx+1,cy], [cx-1,cy], [cx,cy+1], [cx,cy-1]);
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  // -- pointer drawing --
   drawCanvasEl.addEventListener('pointerdown', (e)=>{
-    drawIsDrawing = true;
     const p = drawPointFromEvent(e);
+    const ctx = drawLayerCtxs[activeLayer];
+
+    if(drawTool === 'fill'){
+      pushUndo(activeLayer);
+      floodFill(ctx, p.x, p.y, drawColor);
+      recompositeDraw();
+      return;
+    }
+
+    pushUndo(activeLayer);
+    drawIsDrawing = true;
     drawLastX = p.x; drawLastY = p.y;
-    drawCtx.fillStyle = drawColor;
-    drawCtx.beginPath();
-    drawCtx.arc(p.x, p.y, drawBrush/2, 0, Math.PI*2);
-    drawCtx.fill();
+    ctx.globalCompositeOperation = (drawTool === 'erase') ? 'destination-out' : 'source-over';
+    ctx.fillStyle = drawColor;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, drawBrush/2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+    recompositeDraw();
   });
   drawCanvasEl.addEventListener('pointermove', (e)=>{
-    if(!drawIsDrawing) return;
+    if(!drawIsDrawing || drawTool === 'fill') return;
     const p = drawPointFromEvent(e);
-    drawCtx.strokeStyle = drawColor;
-    drawCtx.lineWidth = drawBrush;
-    drawCtx.lineCap = 'round';
-    drawCtx.lineJoin = 'round';
-    drawCtx.beginPath();
-    drawCtx.moveTo(drawLastX, drawLastY);
-    drawCtx.lineTo(p.x, p.y);
-    drawCtx.stroke();
+    const ctx = drawLayerCtxs[activeLayer];
+    ctx.globalCompositeOperation = (drawTool === 'erase') ? 'destination-out' : 'source-over';
+    ctx.strokeStyle = drawColor;
+    ctx.lineWidth = drawBrush;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(drawLastX, drawLastY);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    ctx.globalCompositeOperation = 'source-over';
     drawLastX = p.x; drawLastY = p.y;
+    recompositeDraw();
   });
   window.addEventListener('pointerup', ()=>{ drawIsDrawing = false; });
 
   document.getElementById('drawClear').addEventListener('click', ()=>{
-    drawCtx.fillStyle = '#ffffff';
-    drawCtx.fillRect(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    pushUndo(activeLayer);
+    drawLayerCtxs[activeLayer].clearRect(0, 0, drawCanvasEl.width, drawCanvasEl.height);
+    recompositeDraw();
   });
 
-  // -- save / load / gallery --
+  document.getElementById('drawDownload').addEventListener('click', ()=>{
+    const transparent = document.getElementById('drawTransparentBg').checked;
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = drawCanvasEl.width;
+    exportCanvas.height = drawCanvasEl.height;
+    const exportCtx = exportCanvas.getContext('2d');
+    if(!transparent){
+      exportCtx.fillStyle = '#ffffff';
+      exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+    }
+    exportCtx.drawImage(drawCanvasEl, 0, 0);
+    const link = document.createElement('a');
+    link.download = (drawNameInput.value.trim() || 'drawing') + '.png';
+    link.href = exportCanvas.toDataURL('image/png');
+    link.click();
+  });
+
+  // -- save / load / gallery (cloud storage saves the flattened composite) --
   async function loadDrawIndex(){
     try{
       const result = await window.storage.get(DRAW_INDEX_KEY, false);
@@ -3169,10 +3571,14 @@
   document.getElementById('drawSave').addEventListener('click', async ()=>{
     const name = drawNameInput.value.trim() || 'untitled';
     drawStatus.textContent = 'saving...';
-    const dataUrl = drawCanvasEl.toDataURL('image/png');
+    const payload = {
+      size: drawCanvasEl.width,
+      layers: drawLayerEls.map(c => c.toDataURL('image/png')),
+      opacities: drawLayerOpacity.slice()
+    };
     if(!currentDrawingId) currentDrawingId = 'd' + Date.now();
     try{
-      await window.storage.set(drawingKey(currentDrawingId), dataUrl, false);
+      await window.storage.set(drawingKey(currentDrawingId), JSON.stringify(payload), false);
       const list = await loadDrawIndex();
       const existing = list.find(d => d.id === currentDrawingId);
       const now = Date.now();
@@ -3228,14 +3634,33 @@
 
   async function loadDrawing(entry){
     currentDrawingId = entry.id;
-    setupDrawCanvas(entry.size || 320, false);
+    setupDrawCanvas(entry.size || 320, true);
     drawNameInput.value = entry.name;
     drawStatus.innerHTML = '&nbsp;';
     try{
       const result = await window.storage.get(drawingKey(entry.id), false);
-      if(result){
+      if(!result) return showDrawCanvasStage(entry.name);
+
+      let payload = null;
+      try{ payload = JSON.parse(result.value); }catch(e){ payload = null; }
+
+      if(payload && Array.isArray(payload.layers)){
+        // per-layer save
+        payload.layers.forEach((dataUrl, i)=>{
+          if(!dataUrl || i >= LAYER_COUNT) return;
+          const img = new Image();
+          img.onload = ()=>{ drawLayerCtxs[i].drawImage(img, 0, 0); recompositeDraw(); };
+          img.src = dataUrl;
+        });
+        if(Array.isArray(payload.opacities)){
+          drawLayerOpacity = payload.opacities.slice(0, LAYER_COUNT);
+          while(drawLayerOpacity.length < LAYER_COUNT) drawLayerOpacity.push(1);
+          layerOpacityInput.value = Math.round(drawLayerOpacity[activeLayer] * 100);
+        }
+      }else{
+        // legacy flat single-image save
         const img = new Image();
-        img.onload = ()=>{ drawCtx.drawImage(img, 0, 0); };
+        img.onload = ()=>{ drawLayerCtxs[0].drawImage(img, 0, 0); recompositeDraw(); };
         img.src = result.value;
       }
     }catch(e){ /* nothing to load */ }
