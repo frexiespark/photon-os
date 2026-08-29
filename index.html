@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PHOTON OS // STANDBY</title>
+<title>illusionary // standby</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --white:#ffffff;
+    --surface:#ffffff;
     --blue-900: hsl(240,100%,14%);
     --blue-700: hsl(240,90%,32%);
     --blue-600: hsl(240,92%,45%);
@@ -19,7 +20,24 @@
     --peri-400: hsl(240,85%,78%);
     --pure-blue: hsl(240,100%,50%);
     --app-bg: #eeeeff;
+    --dock-bg: hsl(240, 65%, 88%);
     --line: hsl(240,100%,45%);
+  }
+
+  html.dark-mode{
+    --surface:#131318;
+    --app-bg:#1a1a21;
+    --dock-bg:#2a2a3d;
+    --peri-100:#15151b;
+    --peri-200:#1c1c24;
+    --peri-300:#2a2a36;
+    --peri-400:#33334a;
+    --blue-900:#dcdce8;
+    --blue-700:#8484b0;
+    --blue-600: hsl(240,90%,63%);
+    --blue-500: hsl(240,100%,70%);
+    --pure-blue: hsl(240,100%,58%);
+    --line: hsl(240,100%,58%);
   }
 
   *{box-sizing:border-box;}
@@ -107,7 +125,7 @@
   html,body{
     height:100%;
     margin:0;
-    background:var(--white);
+    background:var(--surface);
     font-family:'JetBrains Mono', monospace;
     color:var(--blue-600);
     overflow:hidden;
@@ -129,7 +147,7 @@
     pointer-events:none;
   }
 
-  #circuitSvg{ opacity:1; }
+  #circuitSvg{ opacity:0.8; }
   #washLayer{ display:none; }
   #dotLayer{
     background-image: radial-gradient(circle, var(--blue-600) 1.8px, transparent 1.9px);
@@ -255,6 +273,39 @@
   .quote::before{ content:"[ "; }
   .quote::after{ content:" ]"; }
 
+  .next-up-widget{
+    margin-top:14px;
+    max-width:420px;
+    width:100%;
+    background:var(--peri-200);
+    border:2.5px solid var(--pure-blue);
+    border-radius:12px;
+    padding: 10px 16px;
+    text-align:center;
+  }
+  .next-up-label{
+    font-size:10px;
+    font-weight:700;
+    color:var(--blue-700);
+    opacity:0.7;
+    text-transform:lowercase;
+    margin-bottom:2px;
+  }
+  .next-up-text{
+    font-size:13px;
+    font-weight:700;
+    color:var(--blue-600);
+    word-break:break-word;
+  }
+  .next-up-due{
+    font-size:10px;
+    color:var(--blue-700);
+    opacity:0.75;
+    text-transform:lowercase;
+    margin-top:2px;
+  }
+  .next-up-due.overdue{ color:var(--blue-600); opacity:1; font-weight:700; }
+
   .spacer{ flex:1 1 auto; }
 
   .drawer-toggle{
@@ -274,7 +325,7 @@
     position:relative;
     z-index:2;
     width:100%;
-    background: hsl(240, 65%, 88%);
+    background: var(--dock-bg);
     border-top:3px solid var(--blue-600);
     padding:14px 0;
     font-size:13px;
@@ -292,7 +343,7 @@
     position:fixed;
     left:0; right:0; bottom:0;
     z-index:5;
-    background: hsl(240, 65%, 88%);
+    background: var(--dock-bg);
     border-top:4px solid var(--blue-600);
     transform: translateY(100%);
     transition: transform .35s ease;
@@ -420,6 +471,14 @@
     color:var(--blue-600);
     text-transform:lowercase;
   }
+  .app-window-head h2.editable-title{
+    cursor:text;
+    border-bottom:1.5px dashed var(--peri-300);
+    outline:none;
+  }
+  .app-window-head h2.editable-title:focus{
+    border-bottom-color:var(--blue-600);
+  }
   .app-window-head button{
     background:none;
     border:2px solid var(--blue-600);
@@ -432,7 +491,7 @@
     cursor:pointer;
     text-transform:lowercase;
   }
-  .app-window-head .btns{ display:flex; gap:8px; }
+  .app-window-head .btns{ display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
 
   .notes-toolbar{
     display:flex;
@@ -485,6 +544,13 @@
   #notesArea:empty:before{
     content: attr(data-placeholder);
     color:var(--peri-300);
+  }
+  .notes-stats{
+    padding: 4px 24px 0 24px;
+    font-size:10px;
+    color:var(--blue-700);
+    opacity:0.6;
+    text-transform:lowercase;
   }
 
   .save-status{
@@ -552,6 +618,28 @@
     font-weight:800;
     cursor:pointer;
     padding:6px 8px;
+  }
+  .file-row .file-rename{
+    flex:none;
+    background:none;
+    border:none;
+    color:var(--blue-700);
+    opacity:0.5;
+    font-size:14px;
+    cursor:pointer;
+    padding:6px 6px;
+  }
+  .file-row .file-rename:hover{ opacity:0.9; }
+  .file-rename-input{
+    width:100%;
+    border:2px solid var(--blue-600);
+    border-radius:6px;
+    padding:5px 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    color:var(--blue-900);
+    background:var(--surface);
+    outline:none;
   }
   .file-row .file-delete:hover{ opacity:1; }
 
@@ -880,7 +968,7 @@
 
   /* snake */
   #snakeCanvas{
-    background:var(--white);
+    background:var(--surface);
     border:3px solid var(--pure-blue);
     border-radius:10px;
     touch-action:none;
@@ -1148,7 +1236,7 @@
     background:var(--peri-100);
     font-size:12px;
   }
-  .specs-row:nth-child(even){ background:var(--white); }
+  .specs-row:nth-child(even){ background:var(--surface); }
   .specs-row span:first-child{
     color:var(--blue-700);
     opacity:0.7;
@@ -1196,7 +1284,7 @@
   .notif-overlay[hidden]{ display:none; }
   .notif-card{
     width:min(84vw, 300px);
-    background:var(--white);
+    background:var(--surface);
     border:3px solid var(--pure-blue);
     border-radius:16px;
     padding:26px 22px 22px 22px;
@@ -1230,6 +1318,17 @@
     padding:11px 30px;
     cursor:pointer;
     text-transform:lowercase;
+  }
+  .confirm-btn-row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+  }
+  .confirm-btn-row button{ padding:11px 20px; }
+  .confirm-btn-row button.confirm-cancel{
+    background:none;
+    border:2px solid var(--peri-300);
+    color:var(--blue-700);
   }
 
   /* ---------- draw ---------- */
@@ -1398,7 +1497,7 @@
   }
   .draw-opacity input[type=range]{ flex:1; accent-color:var(--blue-600); }
   #drawCanvas{
-    background:var(--white);
+    background:var(--surface);
     border:3px solid var(--pure-blue);
     border-radius:10px;
     touch-action:none;
@@ -1497,6 +1596,54 @@
     cursor:pointer;
     text-transform:lowercase;
   }
+  .todo-due-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    max-width:420px;
+    padding:0 4px 14px 4px;
+  }
+  .todo-due-row label{
+    font-size:11px;
+    color:var(--blue-700);
+    opacity:0.7;
+    text-transform:lowercase;
+    flex:none;
+  }
+  .todo-due-row input[type=datetime-local]{
+    flex:1;
+    border:2px solid var(--peri-300);
+    border-radius:8px;
+    padding:8px 10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--blue-900);
+    outline:none;
+  }
+  .todo-due-row input[type=datetime-local]:focus{ border-color:var(--blue-600); }
+  .todo-due-row button{
+    flex:none;
+    background:none;
+    border:2px solid var(--peri-300);
+    color:var(--blue-700);
+    font-size:14px;
+    font-weight:800;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  .todo-due-badge{
+    font-size:10px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:6px;
+    background:var(--peri-200);
+    color:var(--blue-700);
+    white-space:nowrap;
+    flex:none;
+  }
+  .todo-due-badge.overdue{ background:var(--blue-600); color:var(--white); }
   .todo-head-row{
     display:flex;
     justify-content:space-between;
@@ -1660,6 +1807,12 @@
 
     <div class="quote" id="quote">booting up</div>
 
+    <div class="next-up-widget" id="nextUpWidget" hidden>
+      <div class="next-up-label">next up</div>
+      <div class="next-up-text" id="nextUpText"></div>
+      <div class="next-up-due" id="nextUpDue"></div>
+    </div>
+
     <div class="spacer"></div>
 
     <button class="drawer-toggle" id="drawerToggle" aria-label="open app dock">^</button>
@@ -1742,9 +1895,13 @@
     <div class="app-window-head">
       <h2 id="notesTitle">notes</h2>
       <div class="btns">
+        <button id="notesExportHtml" title="download with formatting">.html</button>
+        <button id="notesExportTxt" title="download as plain text">.txt</button>
+        <button id="notesOpenFile" title="open a .html or .txt file">open</button>
         <button id="notesSave">save</button>
         <button id="notesClose">close</button>
       </div>
+      <input type="file" id="notesFileInput" accept=".html,.htm,.txt" style="display:none">
     </div>
     <div class="notes-toolbar">
       <button class="notes-fmt-btn" data-cmd="bold"><b>B</b></button>
@@ -1763,6 +1920,7 @@
       </select>
     </div>
     <div id="notesArea" class="notes-editable" contenteditable="true" data-placeholder="type here..."></div>
+    <div class="notes-stats" id="notesStats">0 words · 0 characters</div>
     <div class="save-status" id="notesStatus">unsaved</div>
   </div>
 
@@ -1900,6 +2058,11 @@
         <input type="text" id="todoInput" placeholder="add a task...">
         <button id="todoAddBtn">add</button>
       </div>
+      <div class="todo-due-row">
+        <label for="todoDueInput">due (optional)</label>
+        <input type="datetime-local" id="todoDueInput">
+        <button id="todoDueClear" title="clear due date">×</button>
+      </div>
       <div class="todo-head-row">
         <span id="todoCount">0 tasks</span>
         <button id="todoClearDone">clear completed</button>
@@ -2024,6 +2187,13 @@
         <div class="settings-hint">or press ctrl + shift + x anytime</div>
       </div>
       <div>
+        <div class="settings-section-title">appearance</div>
+        <label class="settings-toggle-row">
+          <span>dark mode</span>
+          <input type="checkbox" id="darkModeToggle">
+        </label>
+      </div>
+      <div>
         <div class="settings-section-title">my sites</div>
         <div class="settings-links">
           <button class="settings-link-btn" data-url="https://frexiespark.github.io/skpws-0.6.1">sketchpaws</button>
@@ -2034,12 +2204,12 @@
       <div>
         <div class="settings-section-title">about this pc</div>
         <div class="specs-list">
-          <div class="specs-row"><span>os</span><span>photon os v1.5</span></div>
+          <div class="specs-row"><span>os</span><span>photon os 1.6.2</span></div>
           <div class="specs-row"><span>signed in as</span><span>illusionary</span></div>
-          <div class="specs-row"><span>chipset</span><span>lumineX core x3</span></div>
-          <div class="specs-row"><span>memory</span><span>16 gb</span></div>
-          <div class="specs-row"><span>storage</span><span>illusionary-os file system 512gb</span></div>
-          <div class="specs-row"><span>display</span><span>built-in display (768p)</span></div>
+          <div class="specs-row"><span>chipset</span><span>lumineX core x1</span></div>
+          <div class="specs-row"><span>memory</span><span>16 gb (hue-240)</span></div>
+          <div class="specs-row"><span>storage</span><span>illusionary-os file system</span></div>
+          <div class="specs-row"><span>display</span><span>circuit-blue render engine</span></div>
           <div class="specs-row"><span>uptime</span><span id="specsUptime">0:00</span></div>
         </div>
       </div>
@@ -2160,6 +2330,17 @@
       <div class="notif-title" id="notifTitle">photon os</div>
       <div class="notif-msg" id="notifMsg">&nbsp;</div>
       <button id="notifOk">ok</button>
+    </div>
+  </div>
+
+  <div class="notif-overlay" id="confirmOverlay" hidden>
+    <div class="notif-card">
+      <div class="notif-title">photon os</div>
+      <div class="notif-msg" id="confirmMsg">&nbsp;</div>
+      <div class="confirm-btn-row">
+        <button id="confirmCancelBtn" class="confirm-cancel">cancel</button>
+        <button id="confirmOkBtn">close anyway</button>
+      </div>
     </div>
   </div>
 
@@ -2463,6 +2644,13 @@
     await saveIndex(list);
   }
 
+  async function renameIndexEntry(id, newName){
+    const list = await loadIndex();
+    const existing = list.find(f => f.id === id);
+    if(existing) existing.name = newName;
+    await saveIndex(list);
+  }
+
   async function removeIndexEntry(id){
     const list = await loadIndex();
     await saveIndex(list.filter(f => f.id !== id));
@@ -2479,26 +2667,75 @@
   const notesArea = document.getElementById('notesArea');
   const notesStatus = document.getElementById('notesStatus');
   const notesTitle = document.getElementById('notesTitle');
+  const notesStats = document.getElementById('notesStats');
   let currentFileId = null;
+  let notesDirty = false;
+  let notesLastSavedAt = null;
+  let notesLastSavedTimerId = null;
+
+  function updateNotesStats(){
+    const text = notesArea.textContent || '';
+    const trimmed = text.trim();
+    const words = trimmed ? trimmed.split(/\s+/).length : 0;
+    const chars = text.length;
+    notesStats.textContent = `${words} word${words===1?'':'s'} · ${chars} character${chars===1?'':'s'}`;
+  }
+  notesArea.addEventListener('input', ()=>{
+    notesDirty = true;
+    updateNotesStats();
+  });
+
+  function relativeTimeFrom(ts){
+    if(!ts) return null;
+    const secs = Math.floor((Date.now() - ts) / 1000);
+    if(secs < 10) return 'just now';
+    if(secs < 60) return secs + 's ago';
+    const mins = Math.floor(secs / 60);
+    if(mins < 60) return mins + 'm ago';
+    const hrs = Math.floor(mins / 60);
+    if(hrs < 24) return hrs + 'h ago';
+    const days = Math.floor(hrs / 24);
+    return days + 'd ago';
+  }
+  function tickNotesLastSaved(){
+    if(!notesLastSavedAt) return;
+    const rel = relativeTimeFrom(notesLastSavedAt);
+    notesStatus.textContent = 'last saved ' + rel;
+  }
+  clearInterval(notesLastSavedTimerId);
+  notesLastSavedTimerId = setInterval(tickNotesLastSaved, 15000);
 
   async function openFile(id, displayName){
     closeDrawer();
     currentFileId = id;
     notesTitle.textContent = displayName || id;
+    const canRename = id !== 'scratch';
+    notesTitle.contentEditable = canRename ? 'true' : 'false';
+    notesTitle.classList.toggle('editable-title', canRename);
     notesWindow.classList.add('open');
     notesStatus.textContent = 'loading...';
     try{
       const result = await window.storage.get(fileKey(id), false);
       notesArea.innerHTML = result ? result.value : '';
-      notesStatus.textContent = result ? 'loaded saved file' : 'new, unsaved file';
+      if(result){
+        notesLastSavedAt = Date.now(); // approximation: treat "just opened a saved file" as its last-known-good state
+        tickNotesLastSaved();
+      }else{
+        notesLastSavedAt = null;
+        notesStatus.textContent = 'new, unsaved file';
+      }
     }catch(e){
       notesArea.innerHTML = '';
+      notesLastSavedAt = null;
       notesStatus.textContent = 'new, unsaved file';
     }
+    notesDirty = false;
+    updateNotesStats();
     notesArea.focus();
   }
 
-  document.getElementById('notesClose').addEventListener('click', ()=>{
+  document.getElementById('notesClose').addEventListener('click', async ()=>{
+    if(notesDirty && !(await showConfirm('You have unsaved changes in this note. Close without saving?'))) return;
     notesWindow.classList.remove('open');
     currentFileId = null;
   });
@@ -2509,7 +2746,13 @@
     try{
       const result = await window.storage.set(fileKey(currentFileId), notesArea.innerHTML, false);
       await touchIndexEntry(currentFileId, notesTitle.textContent);
-      notesStatus.textContent = result ? 'saved just now' : 'save failed, try again';
+      if(result){
+        notesDirty = false;
+        notesLastSavedAt = Date.now();
+        tickNotesLastSaved();
+      }else{
+        notesStatus.textContent = 'save failed, try again';
+      }
     }catch(e){
       notesStatus.textContent = 'save failed, try again';
     }
@@ -2564,6 +2807,153 @@
     e.target.blur();
   });
 
+  // -- notes: export / import --
+  function notesSafeFilename(){
+    return (notesTitle.textContent || 'note').trim().replace(/[^\w\- ]/g, '') || 'note';
+  }
+  function notesDownload(filename, content, mime){
+    const blob = new Blob([content], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('notesExportHtml').addEventListener('click', ()=>{
+    const doc = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${notesSafeFilename()}</title>`
+      + `<style>body{font-family:sans-serif; max-width:700px; margin:40px auto; line-height:1.6; color:#1a1a3a;}</style>`
+      + `</head><body>${notesArea.innerHTML}</body></html>`;
+    notesDownload(notesSafeFilename() + '.html', doc, 'text/html');
+  });
+
+  document.getElementById('notesExportTxt').addEventListener('click', ()=>{
+    // strip tags for plain text; .txt can't hold bold/italic/etc, so this is a best-effort plain copy
+    const plain = notesArea.innerText;
+    notesDownload(notesSafeFilename() + '.txt', plain, 'text/plain');
+  });
+
+  const notesFileInput = document.getElementById('notesFileInput');
+  document.getElementById('notesOpenFile').addEventListener('click', ()=>{
+    notesFileInput.click();
+  });
+  notesFileInput.addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const text = reader.result;
+      if(/\.html?$/i.test(file.name)){
+        const parsed = new DOMParser().parseFromString(text, 'text/html');
+        notesArea.innerHTML = parsed.body ? parsed.body.innerHTML : text;
+      }else{
+        const escaped = text
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/\n/g,'<br>');
+        notesArea.innerHTML = escaped;
+      }
+      notesStatus.textContent = 'loaded from file, not saved yet';
+      notesDirty = true;
+      notesLastSavedAt = null;
+      updateNotesStats();
+    };
+    reader.readAsText(file);
+    notesFileInput.value = '';
+  });
+
+  // -- notes: rename the open file by editing the title directly (except the quick note) --
+  let notesTitleBeforeEdit = '';
+  notesTitle.addEventListener('focus', ()=>{
+    notesTitleBeforeEdit = notesTitle.textContent;
+  });
+  notesTitle.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); notesTitle.blur(); }
+  });
+  notesTitle.addEventListener('blur', async ()=>{
+    if(!currentFileId || currentFileId === 'scratch') return;
+    const newName = notesTitle.textContent.trim();
+    if(!newName){
+      notesTitle.textContent = notesTitleBeforeEdit;
+      return;
+    }
+    if(newName === notesTitleBeforeEdit) return;
+    notesTitle.textContent = newName;
+    await renameIndexEntry(currentFileId, newName);
+  });
+
+  // -- notes: keybinds (ctrl+s to save, ctrl+b/i/u for formatting) --
+  notesArea.addEventListener('keydown', (e)=>{
+    const mod = e.ctrlKey || e.metaKey;
+    if(!mod) return;
+    const k = e.key.toLowerCase();
+    if(k === 's'){
+      e.preventDefault();
+      document.getElementById('notesSave').click();
+    }else if(k === 'b'){
+      e.preventDefault();
+      document.execCommand('bold', false, null);
+      updateNotesFmtButtonStates();
+    }else if(k === 'i'){
+      e.preventDefault();
+      document.execCommand('italic', false, null);
+      updateNotesFmtButtonStates();
+    }else if(k === 'u'){
+      e.preventDefault();
+      document.execCommand('underline', false, null);
+      updateNotesFmtButtonStates();
+    }
+    // copy/paste (ctrl+c / ctrl+v) are left alone here — contenteditable
+    // handles those natively without any extra code.
+  });
+
+  // -- notes: auto-convert "1. " or "- " at the start of a line into a real list --
+  // Built by direct DOM manipulation rather than document.execCommand('insertOrderedList'):
+  // execCommand's list insertion has a well-known browser quirk where it can merge a
+  // brand-new list into an unrelated EARLIER list if they're only separated by a plain
+  // line, silently swallowing that line into the wrong list. Building the <ol>/<ul>
+  // ourselves and splicing it into the DOM sidesteps that behavior completely.
+  function convertLineToList(node, ordered){
+    let blockEl = node.parentNode;
+    while(blockEl && blockEl !== notesArea && blockEl.parentNode !== notesArea){
+      blockEl = blockEl.parentNode;
+    }
+    const list = document.createElement(ordered ? 'ol' : 'ul');
+    const li = document.createElement('li');
+    list.appendChild(li);
+
+    if(blockEl === notesArea){
+      notesArea.insertBefore(list, node);
+      li.appendChild(node);
+    }else{
+      while(blockEl.firstChild) li.appendChild(blockEl.firstChild);
+      blockEl.parentNode.replaceChild(list, blockEl);
+    }
+
+    const range = document.createRange();
+    range.selectNodeContents(li);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  notesArea.addEventListener('input', (e)=>{
+    if(e.inputType !== 'insertText' || e.data !== ' ') return;
+    const sel = window.getSelection();
+    if(!sel.rangeCount) return;
+    const node = sel.anchorNode;
+    if(!node || node.nodeType !== 3) return; // text node only
+    const offset = sel.anchorOffset;
+    const textBefore = node.textContent.slice(0, offset);
+    const match = textBefore.match(/^(1\.|-|\*)\s$/);
+    if(!match) return;
+
+    const triggerLen = match[0].length;
+    node.textContent = node.textContent.slice(0, offset - triggerLen) + node.textContent.slice(offset);
+    convertLineToList(node, match[1] === '1.');
+  });
+
   // ---------- storage browser ----------
   const storageWindow = document.getElementById('storageWindow');
   const fileListEl = document.getElementById('fileList');
@@ -2596,6 +2986,7 @@
           <div class="file-name"></div>
           <div class="file-updated"></div>
         </span>
+        <button class="file-rename" aria-label="rename" title="rename">✎</button>
         <button class="file-delete" aria-label="delete">×</button>
       `;
       row.querySelector('.file-name').textContent = f.name;
@@ -2612,6 +3003,37 @@
       };
       row.querySelector('.file-meta').addEventListener('click', openThis);
       row.querySelector('.file-icon').addEventListener('click', openThis);
+
+      row.querySelector('.file-rename').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const nameDiv = row.querySelector('.file-name');
+        const currentName = f.name;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'file-rename-input';
+        input.value = currentName;
+        nameDiv.replaceWith(input);
+        input.focus();
+        input.select();
+
+        let committed = false;
+        const commit = async ()=>{
+          if(committed) return;
+          committed = true;
+          const newName = input.value.trim() || currentName;
+          if(newName !== currentName){
+            if(f.kind === 'drawing') await renameDrawEntry(f.id, newName);
+            else await renameIndexEntry(f.id, newName);
+          }
+          renderFileList();
+        };
+        input.addEventListener('keydown', (ev)=>{
+          if(ev.key === 'Enter'){ ev.preventDefault(); input.blur(); }
+          if(ev.key === 'Escape'){ committed = true; renderFileList(); }
+        });
+        input.addEventListener('blur', commit);
+        input.addEventListener('click', ev => ev.stopPropagation());
+      });
 
       row.querySelector('.file-delete').addEventListener('click', async (e)=>{
         e.stopPropagation();
@@ -3058,6 +3480,7 @@
   document.getElementById('gamesClose').addEventListener('click', ()=>{
     gamesWindow.classList.remove('open');
     clearGameLoops();
+    activeGame = null;
   });
 
   function showGamesMenu(){
@@ -3136,6 +3559,29 @@
   document.getElementById('notifOk').addEventListener('click', ()=>{
     notifOverlay.hidden = true;
   });
+
+  // -- native-styled confirm dialog (replaces the browser's built-in confirm()) --
+  const confirmOverlay = document.getElementById('confirmOverlay');
+  const confirmMsg = document.getElementById('confirmMsg');
+  const confirmOkBtn = document.getElementById('confirmOkBtn');
+  const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+
+  function showConfirm(message){
+    return new Promise(resolve=>{
+      confirmMsg.textContent = message;
+      confirmOverlay.hidden = false;
+      function cleanup(result){
+        confirmOverlay.hidden = true;
+        confirmOkBtn.removeEventListener('click', onOk);
+        confirmCancelBtn.removeEventListener('click', onCancel);
+        resolve(result);
+      }
+      function onOk(){ cleanup(true); }
+      function onCancel(){ cleanup(false); }
+      confirmOkBtn.addEventListener('click', onOk);
+      confirmCancelBtn.addEventListener('click', onCancel);
+    });
+  }
 
   // ================= SNAKE =================
   const snakeCanvas = document.getElementById('snakeCanvas');
@@ -3227,7 +3673,7 @@
     btn.addEventListener('click', ()=> snakeSetDir(btn.dataset.dir));
   });
   window.addEventListener('keydown', (e)=>{
-    if(activeGame !== 'snake') return;
+    if(activeGame !== 'snake' || !gamesWindow.classList.contains('open')) return;
     const k = e.key.toLowerCase();
     if(k === 'arrowup' || k === 'w') snakeSetDir('up');
     if(k === 'arrowdown' || k === 's') snakeSetDir('down');
@@ -3425,7 +3871,7 @@
   }
 
   window.addEventListener('keydown', (e)=>{
-    if(activeGame !== 'g2048') return;
+    if(activeGame !== 'g2048' || !gamesWindow.classList.contains('open')) return;
     const k = e.key.toLowerCase();
     if(k === 'arrowleft' || k === 'a'){ e.preventDefault(); g2048Move('left'); }
     if(k === 'arrowright' || k === 'd'){ e.preventDefault(); g2048Move('right'); }
@@ -3822,7 +4268,7 @@
   }
 
   window.addEventListener('keydown', (e)=>{
-    if(activeGame !== 'wordle') return;
+    if(activeGame !== 'wordle' || !gamesWindow.classList.contains('open')) return;
     if(/^[a-zA-Z]$/.test(e.key) && e.key.length === 1) wordleInputLetter(e.key.toUpperCase());
     else if(e.key === 'Backspace') wordleBackspace();
     else if(e.key === 'Enter') wordleSubmit();
@@ -3833,6 +4279,30 @@
   const todoInput = document.getElementById('todoInput');
   const todoList = document.getElementById('todoList');
   const todoCount = document.getElementById('todoCount');
+  const todoDueInput = document.getElementById('todoDueInput');
+  const nextUpWidget = document.getElementById('nextUpWidget');
+  const nextUpText = document.getElementById('nextUpText');
+  const nextUpDue = document.getElementById('nextUpDue');
+
+  async function refreshNextUpWidget(){
+    const list = await loadTodos();
+    const now = Date.now();
+    const withDue = list.filter(t => !t.done && t.due).sort((a,b) => a.due - b.due);
+    if(withDue.length === 0){
+      nextUpWidget.hidden = true;
+      return;
+    }
+    const next = withDue[0];
+    nextUpText.textContent = next.text;
+    const overdue = next.due < now;
+    const d = new Date(next.due);
+    nextUpDue.textContent = (overdue ? 'overdue — ' : 'due ')
+      + months[d.getMonth()].slice(0,3) + ' ' + d.getDate() + ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    nextUpDue.classList.toggle('overdue', overdue);
+    nextUpWidget.hidden = false;
+  }
+  refreshNextUpWidget();
+  setInterval(refreshNextUpWidget, 60000);
   const TODO_KEY = 'illusionary-os:todos';
 
   function openTodo(){
@@ -3858,14 +4328,25 @@
   async function addTodo(){
     const text = todoInput.value.trim();
     if(!text) return;
+    const dueValue = todoDueInput.value; // datetime-local string, or '' if unset
     const list = await loadTodos();
-    list.unshift({ id: 't' + Date.now(), text, done: false, createdAt: Date.now() });
+    list.unshift({
+      id: 't' + Date.now(),
+      text,
+      done: false,
+      createdAt: Date.now(),
+      due: dueValue ? new Date(dueValue).getTime() : null
+    });
     await saveTodos(list);
     todoInput.value = '';
+    todoDueInput.value = '';
     renderTodos();
   }
   document.getElementById('todoAddBtn').addEventListener('click', addTodo);
   todoInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') addTodo(); });
+  document.getElementById('todoDueClear').addEventListener('click', ()=>{
+    todoDueInput.value = '';
+  });
 
   document.getElementById('todoClearDone').addEventListener('click', async ()=>{
     const list = await loadTodos();
@@ -3875,6 +4356,7 @@
 
   async function renderTodos(){
     const list = await loadTodos();
+    refreshNextUpWidget();
     const doneCount = list.filter(t => t.done).length;
     todoCount.textContent = `${list.length} task${list.length===1?'':'s'} (${doneCount} done)`;
     if(list.length === 0){
@@ -3885,12 +4367,22 @@
     list.forEach(t => {
       const row = document.createElement('div');
       row.className = 'todo-row' + (t.done ? ' done' : '');
+      const overdue = t.due && !t.done && t.due < Date.now();
+      const dueBadge = t.due
+        ? `<span class="todo-due-badge${overdue ? ' overdue' : ''}"></span>`
+        : '';
       row.innerHTML = `
         <input type="checkbox" ${t.done ? 'checked' : ''}>
         <span class="todo-text"></span>
+        ${dueBadge}
         <button class="todo-delete" aria-label="delete">×</button>
       `;
       row.querySelector('.todo-text').textContent = t.text;
+      if(t.due){
+        const d = new Date(t.due);
+        row.querySelector('.todo-due-badge').textContent =
+          months[d.getMonth()].slice(0,3) + ' ' + d.getDate() + ', ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+      }
       row.querySelector('input[type=checkbox]').addEventListener('change', async ()=>{
         const list2 = await loadTodos();
         const item = list2.find(x => x.id === t.id);
@@ -4032,13 +4524,24 @@
   let activeLayer = 0;
   let undoStack = [];       // {layerIndex, imageData}
   let redoStack = [];
+  let drawDirty = false;
+  let drawLastSavedAt = null;
+  let drawLastSavedTimerId = null;
+
+  function tickDrawLastSaved(){
+    if(!drawLastSavedAt) return;
+    drawStatus.textContent = 'last saved ' + relativeTimeFrom(drawLastSavedAt);
+  }
+  clearInterval(drawLastSavedTimerId);
+  drawLastSavedTimerId = setInterval(tickDrawLastSaved, 15000);
 
   function openDraw(){
     closeDrawer();
     drawWindow.classList.add('open');
     showDrawMenu();
   }
-  document.getElementById('drawClose').addEventListener('click', ()=>{
+  document.getElementById('drawClose').addEventListener('click', async ()=>{
+    if(drawDirty && !(await showConfirm('You have unsaved changes in this drawing. Close without saving?'))) return;
     drawWindow.classList.remove('open');
   });
 
@@ -4142,6 +4645,7 @@
     currentDrawingId = null;
     setupDrawCanvas(size, true);
     drawNameInput.value = '';
+    drawLastSavedAt = null;
     drawStatus.innerHTML = '&nbsp;';
     showDrawCanvasStage('new drawing');
   });
@@ -4177,6 +4681,7 @@
     undoStack = [];
     redoStack = [];
     updateUndoRedoButtons();
+    drawDirty = false;
 
     if(blank){
       recompositeDraw();
@@ -4211,6 +4716,7 @@
     if(undoStack.length > 40) undoStack.shift();
     redoStack = [];
     updateUndoRedoButtons();
+    drawDirty = true;
   }
   function doUndo(){
     if(undoStack.length === 0) return;
@@ -4221,6 +4727,7 @@
     ctx.putImageData(last.imageData, 0, 0);
     recompositeDraw();
     updateUndoRedoButtons();
+    drawDirty = true;
   }
   function doRedo(){
     if(redoStack.length === 0) return;
@@ -4231,12 +4738,18 @@
     ctx.putImageData(last.imageData, 0, 0);
     recompositeDraw();
     updateUndoRedoButtons();
+    drawDirty = true;
   }
   drawUndoBtn.addEventListener('click', doUndo);
   drawRedoBtn.addEventListener('click', doRedo);
 
   window.addEventListener('keydown', (e)=>{
     if(drawStages.canvas.hidden) return;
+    if(e.ctrlKey && e.key.toLowerCase() === 's'){
+      e.preventDefault();
+      document.getElementById('drawSave').click();
+      return;
+    }
     const tag = document.activeElement && document.activeElement.tagName;
     if(tag === 'INPUT' || tag === 'TEXTAREA') return;
     if(e.ctrlKey && !e.shiftKey && e.key.toLowerCase() === 'z'){ e.preventDefault(); doUndo(); }
@@ -4350,6 +4863,24 @@
     try{ await window.storage.set(DRAW_INDEX_KEY, JSON.stringify(list), false); }catch(e){ /* best effort */ }
   }
 
+  async function renameDrawEntry(id, newName){
+    const list = await loadDrawIndex();
+    const existing = list.find(d => d.id === id);
+    if(existing) existing.name = newName;
+    await saveDrawIndex(list);
+  }
+
+  // rename an already-saved drawing immediately, without needing a full re-save
+  drawNameInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){ e.preventDefault(); drawNameInput.blur(); }
+  });
+  drawNameInput.addEventListener('blur', async ()=>{
+    if(!currentDrawingId) return; // new, unsaved drawing — name just gets used on first save
+    const newName = drawNameInput.value.trim();
+    if(!newName) return;
+    await renameDrawEntry(currentDrawingId, newName);
+  });
+
   document.getElementById('drawSave').addEventListener('click', async ()=>{
     const name = drawNameInput.value.trim() || 'untitled';
     drawStatus.textContent = 'saving...';
@@ -4371,7 +4902,9 @@
         list.push({ id: currentDrawingId, name, updatedAt: now, size: drawCanvasEl.width });
       }
       await saveDrawIndex(list);
-      drawStatus.textContent = 'saved just now';
+      drawDirty = false;
+      drawLastSavedAt = Date.now();
+      tickDrawLastSaved();
     }catch(e){
       drawStatus.textContent = 'save failed, try again';
     }
@@ -4418,7 +4951,8 @@
     currentDrawingId = entry.id;
     setupDrawCanvas(entry.size || 320, true);
     drawNameInput.value = entry.name;
-    drawStatus.innerHTML = '&nbsp;';
+    drawLastSavedAt = entry.updatedAt || null;
+    if(drawLastSavedAt) tickDrawLastSaved(); else drawStatus.innerHTML = '&nbsp;';
     try{
       const result = await window.storage.get(drawingKey(entry.id), false);
       if(!result) return showDrawCanvasStage(entry.name);
@@ -4498,6 +5032,38 @@
   });
   resetIdleTimer();
 
+  // ---------- app settings (dark mode) ----------
+  const APP_SETTINGS_KEY = 'illusionary-os:settings';
+  const darkModeToggle = document.getElementById('darkModeToggle');
+
+  async function loadAppSettings(){
+    try{
+      const result = await window.storage.get(APP_SETTINGS_KEY, false);
+      return result ? JSON.parse(result.value) : {};
+    }catch(e){ return {}; }
+  }
+  async function saveAppSettings(settings){
+    try{ await window.storage.set(APP_SETTINGS_KEY, JSON.stringify(settings), false); }catch(e){ /* best effort */ }
+  }
+
+  function applyDarkMode(on){
+    document.documentElement.classList.toggle('dark-mode', on);
+  }
+
+  (async ()=>{
+    const settings = await loadAppSettings();
+    if(settings.darkMode){
+      darkModeToggle.checked = true;
+      applyDarkMode(true);
+    }
+  })();
+
+  darkModeToggle.addEventListener('change', async ()=>{
+    applyDarkMode(darkModeToggle.checked);
+    const settings = await loadAppSettings();
+    settings.darkMode = darkModeToggle.checked;
+    await saveAppSettings(settings);
+  });
 </script>
 
 </body>
