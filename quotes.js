@@ -18,5 +18,5 @@ const QUOTES = [
   'today\'s mood: 240 hue blue', 'running diagnostics on vibes', 'technically functional', 'warning: contains opinions',
   'quietly winning, loudly confused', 'quantum uncertainty, but make it cute', 'quietly judging your uptime', 'quietly plotting the next update',
   'error: too cool to compute', 'restart not required, just vibes', 'soft launch of pure chaos', 'definitely following the rules, mostly',
-  'blue hued and slightly unhinged',
+  'blue hued and slightly unhinged', 'this message has a 1 in 1,500 chance to appear',
 ];
